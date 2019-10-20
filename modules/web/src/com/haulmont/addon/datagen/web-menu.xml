@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
-    <menu id="application-datagen" insertBefore="administration">
+    <menu id="datagen" insertAfter="entityInspector.browse">
+        <item screen="datagen_EntitySelect"/>
     </menu>
 </menu-config>

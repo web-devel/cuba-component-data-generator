@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <metadata xmlns="http://schemas.haulmont.com/cuba/metadata.xsd">
 
-    <metadata-model root-package="com.haulmont.addon.datagen" namespace="datagen"/>
+    <metadata-model root-package="com.haulmont.addon.datagen" namespace="datagen">
+        <class>com.haulmont.addon.datagen.entity.DataGenerationCommand</class>
+        <class>com.haulmont.addon.datagen.entity.PropertyGenerationSettings</class>
+        <class>com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings</class>
+        <class>com.haulmont.addon.datagen.entity.EntityGenerationSettings</class>
+    </metadata-model>
 
 </metadata>

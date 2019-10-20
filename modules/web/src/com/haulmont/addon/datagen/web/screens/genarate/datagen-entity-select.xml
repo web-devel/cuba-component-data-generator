@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        caption="msg://caption"
+        messagesPack="com.haulmont.addon.datagen.web.screens.genarate">
+    <data>
+        <instance id="generationCommandDc"
+                  class="com.haulmont.addon.datagen.entity.DataGenerationCommand"/>
+    </data>
+    <layout expand="propertiesConfigBox">
+        <lookupField id="entityLookup" caption="msg://entityLookup"/>
+        <scrollBox id="propertiesConfigBox">
+
+        </scrollBox>
+        <groupBox>
+            <hbox>
+                <form dataContainer="generationCommandDc">
+                    <field property="log"/>
+                </form>
+                <button id="generateBtn"
+                        caption="msg://generate"
+                        icon="font-icon:GEAR"/>
+            </hbox>
+        </groupBox>
+    </layout>
+</window>
