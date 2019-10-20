@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<app-component xmlns="http://schemas.haulmont.com/cuba/app-component.xsd"
+               dependsOn="com.haulmont.cuba">
+
+    <module name="global" blocks="*">
+        <artifact name="datagen-global" appJar="true"/>
+
+        <property name="cuba.persistenceConfig" value="+com/haulmont/addon/datagen/persistence.xml"/>
+        <property name="cuba.metadataConfig" value="+com/haulmont/addon/datagen/metadata.xml"/>
+        <property name="cuba.viewsConfig" value="+com/haulmont/addon/datagen/views.xml"/>
+    </module>
+    <module name="core" dependsOn="global" blocks="core">
+        <artifact name="datagen-core" appJar="true"/>
+        <artifact name="datagen-core" classifier="db" ext="zip" configuration="dbscripts"/>
+
+        <property name="cuba.springContextConfig" value="+com/haulmont/addon/datagen/spring.xml"/>
+        <property name="cuba.mainMessagePack" value="+com.haulmont.addon.datagen.core"/>
+    </module>
+    <module name="web" dependsOn="global" blocks="web">
+        <artifact name="datagen-web" appJar="true"/>
+        <artifact name="datagen-web" classifier="web" ext="zip" configuration="webcontent"/>
+
+        <property name="cuba.springContextConfig" value="+com/haulmont/addon/datagen/web-spring.xml"/>
+        <property name="cuba.dispatcherSpringContextConfig"
+                  value="+com/haulmont/addon/datagen/web-dispatcher-spring.xml"/>
+        <property name="cuba.windowConfig" value="+com/haulmont/addon/datagen/web-screens.xml"/>
+        <property name="cuba.menuConfig" value="+com/haulmont/addon/datagen/web-menu.xml"/>
+        <property name="cuba.permissionConfig" value="+com/haulmont/addon/datagen/web-permissions.xml"/>
+        <property name="cuba.mainMessagePack" value="+com.haulmont.addon.datagen.web"/>
+    </module>
+</app-component>
