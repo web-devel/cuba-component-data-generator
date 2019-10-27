@@ -14,7 +14,7 @@
         <groupBox>
             <hbox>
                 <form dataContainer="generationCommandDc">
-                    <field property="log"/>
+                    <field property="saveExecutionLog"/>
                 </form>
                 <button id="generateBtn"
                         caption="msg://generate"

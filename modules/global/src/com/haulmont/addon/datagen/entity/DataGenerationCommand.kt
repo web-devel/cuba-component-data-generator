@@ -8,7 +8,7 @@ import com.haulmont.cuba.core.entity.BaseUuidEntity
 class DataGenerationCommand : BaseUuidEntity() {
 
     @MetaProperty
-    var log: Boolean? = true
+    var saveExecutionLog: Boolean? = true
 
     var entityGenerationSettings: EntityGenerationSettings? = null
 }

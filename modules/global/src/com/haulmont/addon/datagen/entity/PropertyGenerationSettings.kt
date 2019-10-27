@@ -9,13 +9,14 @@ open class PropertyGenerationSettings : BaseUuidEntity() {
     lateinit var metaProperty: MetaProperty
 }
 
-@MetaClass(name = "datagen_StringPropertyGenerationSettings")
-class StringPropertyGenerationSettings : PropertyGenerationSettings() {
-    var manualValue: String? = null
-}
+object PropertyGeneration {
 
-@MetaClass(name = "datagen_BooleanPropertyGenerationSettings")
-class BooleanPropertyGenerationSettings : PropertyGenerationSettings() {
-    var random = false
-    var manualValue: Boolean? = null
+    val mapping = mapOf(
+            java.lang.String::class.java to StringPropertyGenerationSettings::class.java
+    )
+
+
+    fun isSupported(prop: com.haulmont.chile.core.model.MetaProperty): Boolean {
+        return mapping.containsKey(prop.range.asDatatype<Any>().javaClass)
+    }
 }

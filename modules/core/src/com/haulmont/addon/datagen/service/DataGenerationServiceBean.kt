@@ -1,7 +1,6 @@
 package com.haulmont.addon.datagen.service;
 
 import com.haulmont.addon.datagen.entity.DataGenerationCommand
-import com.haulmont.chile.core.model.MetaClass
 import org.springframework.stereotype.Service
 
 @Service(DataGenerationService.NAME)
