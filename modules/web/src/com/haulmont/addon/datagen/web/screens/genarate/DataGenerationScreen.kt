@@ -11,6 +11,8 @@ import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
 import com.haulmont.cuba.gui.components.data.options.ListOptions
+import com.haulmont.cuba.gui.model.CollectionPropertyContainer
+import com.haulmont.cuba.gui.model.DataComponents
 import com.haulmont.cuba.gui.model.InstanceContainer
 import com.haulmont.cuba.gui.screen.Screen
 import com.haulmont.cuba.gui.screen.Subscribe
@@ -24,14 +26,23 @@ import javax.inject.Inject
 @UiDescriptor("data-generation.xml")
 class DataGenerationScreen : Screen() {
 
+    // Services
     @Inject
     private lateinit var metadata: Metadata
     @Inject
     private lateinit var uiComponents: UiComponents
     @Inject
+    private lateinit var dataComponents: DataComponents
+    @Inject
     private lateinit var dataGenerationService: DataGenerationService
+
+    // Data
     @Inject
     private lateinit var generationCommandDc: InstanceContainer<DataGenerationCommand>
+    @Inject
+    private lateinit var propertiesDc: CollectionPropertyContainer<PropertyGenerationSettings>
+
+    // UI
     @Inject
     private lateinit var entityLookup: LookupField<MetaClass>
     @Inject
@@ -74,11 +85,17 @@ class DataGenerationScreen : Screen() {
     }
 
 
-
     private fun createPropertyGenerationUI(
             prop: MetaProperty,
             settings: PropertyGenerationSettings
     ): Component {
+        val propDC = dataComponents.createInstanceContainer(
+                PropertyGenerationSettings::class.java,
+                propertiesDc,
+                prop.name.toString()
+        )
+        propDC.setItem(settings)
+        screenData.registerContainer("${prop.name}Dc", propDC) // todo unregister
         val webGroupBox = uiComponents.create<WebGroupBox>(WebGroupBox::class.java)
         webGroupBox.caption = prop.name
         return webGroupBox

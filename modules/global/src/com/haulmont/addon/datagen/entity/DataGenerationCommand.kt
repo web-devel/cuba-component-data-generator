@@ -10,5 +10,6 @@ class DataGenerationCommand : BaseUuidEntity() {
     @MetaProperty
     var saveExecutionLog: Boolean? = true
 
+    @MetaProperty
     var entityGenerationSettings: EntityGenerationSettings? = null
 }

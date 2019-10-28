@@ -4,7 +4,11 @@
         messagesPack="com.haulmont.addon.datagen.web.screens.genarate">
     <data>
         <instance id="generationCommandDc"
-                  class="com.haulmont.addon.datagen.entity.DataGenerationCommand"/>
+                  class="com.haulmont.addon.datagen.entity.DataGenerationCommand">
+            <instance id="generationSettingsDc" property="entityGenerationSettings">
+                <collection id="propertiesDc" property="properties"/>
+            </instance>
+        </instance>
     </data>
     <layout expand="propertiesConfigBox">
         <lookupField id="entityLookup" caption="msg://entityLookup"/>

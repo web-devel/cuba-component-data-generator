@@ -9,7 +9,3 @@ interface DataGenerationService {
 
     fun generateEntities(command: DataGenerationCommand)
 }
-
-data class EntityGenerationOptions(
-        val amount: Int
-)

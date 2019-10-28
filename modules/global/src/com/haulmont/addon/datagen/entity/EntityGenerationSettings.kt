@@ -12,7 +12,7 @@ class EntityGenerationSettings(
 
     @MetaProperty
     var amount: Int? = 1
-
+    @MetaProperty
     var properties: MutableList<PropertyGenerationSettings> = mutableListOf()
 
 }

@@ -3,9 +3,10 @@
 
     <metadata-model root-package="com.haulmont.addon.datagen" namespace="datagen">
         <class>com.haulmont.addon.datagen.entity.DataGenerationCommand</class>
+        <class>com.haulmont.addon.datagen.entity.EntityGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.PropertyGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings</class>
-        <class>com.haulmont.addon.datagen.entity.EntityGenerationSettings</class>
+        <class>com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings</class>
     </metadata-model>
 
 </metadata>
