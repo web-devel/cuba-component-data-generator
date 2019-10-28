@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="stringPropertyGenerationSettingsDc"
+                  class="com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <layout>
+        <hbox>
+            <lookupField property="strategy" dataContainer="stringPropertyGenerationSettingsDc"/>
+            <textField property="manualValue" dataContainer="stringPropertyGenerationSettingsDc"/>
+        </hbox>
+    </layout>
+</fragment>
+

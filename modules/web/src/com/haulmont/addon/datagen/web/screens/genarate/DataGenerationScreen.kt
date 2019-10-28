@@ -1,24 +1,23 @@
 package com.haulmont.addon.datagen.web.screens.genarate
 
-import com.haulmont.addon.datagen.entity.DataGenerationCommand
-import com.haulmont.addon.datagen.entity.EntityGenerationSettings
 import com.haulmont.addon.datagen.PropertyGeneration
-import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.*
 import com.haulmont.addon.datagen.service.DataGenerationService
+import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
+import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
 import com.haulmont.cuba.core.global.Metadata
+import com.haulmont.cuba.gui.Fragments
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
 import com.haulmont.cuba.gui.components.data.options.ListOptions
 import com.haulmont.cuba.gui.model.CollectionPropertyContainer
 import com.haulmont.cuba.gui.model.DataComponents
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.Screen
-import com.haulmont.cuba.gui.screen.Subscribe
-import com.haulmont.cuba.gui.screen.UiController
-import com.haulmont.cuba.gui.screen.UiDescriptor
+import com.haulmont.cuba.gui.screen.*
 import com.haulmont.cuba.web.gui.components.WebGroupBox
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @Suppress("IncorrectCreateEntity")
@@ -33,6 +32,8 @@ class DataGenerationScreen : Screen() {
     private lateinit var uiComponents: UiComponents
     @Inject
     private lateinit var dataComponents: DataComponents
+    @Inject
+    private lateinit var fragments: Fragments
     @Inject
     private lateinit var dataGenerationService: DataGenerationService
 
@@ -96,9 +97,25 @@ class DataGenerationScreen : Screen() {
         )
         propDC.setItem(settings)
         screenData.registerContainer("${prop.name}Dc", propDC) // todo unregister
+
         val webGroupBox = uiComponents.create<WebGroupBox>(WebGroupBox::class.java)
         webGroupBox.caption = prop.name
+        val createPropFragment = createPropFragment(settings)
+        webGroupBox.add(createPropFragment.fragment)
         return webGroupBox
+    }
+
+    fun createPropFragment(propSettings: PropertyGenerationSettings): ScreenFragment {
+        return when (propSettings) {
+            is BooleanPropertyGenerationSettings -> {
+                fragments.create(this, BooleanPropertyGenerationSettingsFragment::class.java)
+                        .setItem(propSettings)
+            }
+            is StringPropertyGenerationSettings ->
+                fragments.create(this, StringPropertyGenerationSettingsFragment::class.java)
+                        .setItem(propSettings)
+            else -> throw IllegalStateException("Unsupported Property")
+        }
     }
 
 }

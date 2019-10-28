@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="booleanPropertyGenerationSettingsDc"
+                  class="com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings">
+        </instance>
+    </data>
+    <layout>
+        <hbox>
+            <checkBox property="random" dataContainer="booleanPropertyGenerationSettingsDc"/>
+            <checkBox property="manualValue" dataContainer="booleanPropertyGenerationSettingsDc"/>
+        </hbox>
+    </layout>
+</fragment>
+
