@@ -2,11 +2,13 @@ package com.haulmont.addon.datagen.web.screens.genarate
 
 import com.haulmont.addon.datagen.entity.DataGenerationCommand
 import com.haulmont.addon.datagen.entity.EntityGenerationSettings
-import com.haulmont.addon.datagen.entity.PropertyGeneration
+import com.haulmont.addon.datagen.PropertyGeneration
+import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
 import com.haulmont.cuba.core.global.Metadata
+import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
 import com.haulmont.cuba.gui.components.data.options.ListOptions
 import com.haulmont.cuba.gui.model.InstanceContainer
@@ -25,8 +27,9 @@ class DataGenerationScreen : Screen() {
     @Inject
     private lateinit var metadata: Metadata
     @Inject
+    private lateinit var uiComponents: UiComponents
+    @Inject
     private lateinit var dataGenerationService: DataGenerationService
-
     @Inject
     private lateinit var generationCommandDc: InstanceContainer<DataGenerationCommand>
     @Inject
@@ -59,7 +62,9 @@ class DataGenerationScreen : Screen() {
         metaClass.properties
                 .filter { PropertyGeneration.isSupported(it) }
                 .forEach {
-                    propertiesConfigBox.add(createPropertyGenerationComponents(it))
+                    val propSettings = PropertyGeneration.createSettings(it) ?: return
+                    entityGenerationSettings.properties.add(propSettings)
+                    propertiesConfigBox.add(createPropertyGenerationUI(it, propSettings))
                 }
     }
 
@@ -68,8 +73,13 @@ class DataGenerationScreen : Screen() {
         dataGenerationService.generateEntities(this.generationCommandDc.item)
     }
 
-    private fun createPropertyGenerationComponents(prop: MetaProperty): Component {
-        val webGroupBox = WebGroupBox()
+
+
+    private fun createPropertyGenerationUI(
+            prop: MetaProperty,
+            settings: PropertyGenerationSettings
+    ): Component {
+        val webGroupBox = uiComponents.create<WebGroupBox>(WebGroupBox::class.java)
         webGroupBox.caption = prop.name
         return webGroupBox
     }

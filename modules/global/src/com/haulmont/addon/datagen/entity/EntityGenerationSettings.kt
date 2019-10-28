@@ -13,6 +13,6 @@ class EntityGenerationSettings(
     @MetaProperty
     var amount: Int? = 1
 
-    var properties: List<PropertyGenerationSettings> = mutableListOf()
+    var properties: MutableList<PropertyGenerationSettings> = mutableListOf()
 
 }
