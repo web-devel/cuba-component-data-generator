@@ -13,7 +13,7 @@
     <layout expand="propertiesConfigBox">
         <lookupField id="entityLookup" caption="msg://entityLookup"/>
         <scrollBox id="propertiesConfigBox">
-
+            <!--Properties are placed here-->
         </scrollBox>
         <groupBox>
             <hbox>
