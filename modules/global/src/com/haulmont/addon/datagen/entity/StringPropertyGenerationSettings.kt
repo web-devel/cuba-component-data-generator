@@ -9,7 +9,7 @@ class StringPropertyGenerationSettings : PropertyGenerationSettings() {
     var manualValue: String? = null
 
     @MetaProperty
-    private var strategy: String? = null
+    private var strategy: String? = StringPropertyGenerationStrategy.FAKER.id
 
     fun getStrategy(): StringPropertyGenerationStrategy? = strategy?.let { StringPropertyGenerationStrategy.fromId(it) }
 

@@ -6,20 +6,12 @@ enum class StringPropertyGenerationStrategy(private val id: String) : EnumClass<
     MANUAL("MANUAL"),
     FAKER("FAKER");
 
-    override fun getId(): String {
-        return id
-    }
+    override fun getId() = id
 
     companion object {
 
         @JvmStatic
-        fun fromId(id: String): StringPropertyGenerationStrategy? {
-            for (at in StringPropertyGenerationStrategy.values()) {
-                if (at.getId() == id) {
-                    return at
-                }
-            }
-            return null
-        }
+        fun fromId(id: String): StringPropertyGenerationStrategy?
+                = StringPropertyGenerationStrategy.values().find { it.id == id }
     }
 }

@@ -72,7 +72,7 @@ class DataGenerationScreen : Screen() {
         generationCommandDc.item.entityGenerationSettings = entityGenerationSettings
 
         metaClass.properties
-                .filter { PropertyGeneration.isSupported(it) }
+                .filter { shouldBeGenerated(it) }
                 .forEach {
                     val propSettings = PropertyGeneration.createSettings(it) ?: return
                     entityGenerationSettings.properties.add(propSettings)
@@ -117,6 +117,12 @@ class DataGenerationScreen : Screen() {
             else -> throw IllegalStateException("Unsupported Property")
         }
     }
+
+    private fun shouldBeGenerated(it: MetaProperty) =
+            PropertyGeneration.isGeneratorAvailable(it)
+                    && !metadata.tools.isSystem(it)
+                    && metadata.tools.isPersistent(it)
+
 
 }
 

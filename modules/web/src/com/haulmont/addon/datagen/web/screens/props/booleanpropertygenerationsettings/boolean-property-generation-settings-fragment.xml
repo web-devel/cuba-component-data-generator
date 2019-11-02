@@ -7,7 +7,9 @@
     </data>
     <layout>
         <hbox>
-            <checkBox property="random" dataContainer="booleanPropertyGenerationSettingsDc"/>
+            <lookupField property="strategy"
+                         dataContainer="booleanPropertyGenerationSettingsDc"
+                         caption="msg://com.haulmont.addon.datagen.entity/BooleanPropertyGenerationSettings.strategy"/>
             <checkBox property="manualValue" dataContainer="booleanPropertyGenerationSettingsDc"/>
         </hbox>
     </layout>

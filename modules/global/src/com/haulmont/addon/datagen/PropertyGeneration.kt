@@ -12,8 +12,7 @@ object PropertyGeneration {
             java.lang.Boolean::class.java to BooleanPropertyGenerationSettings::class.java
     )
 
-
-    fun isSupported(prop: MetaProperty): Boolean {
+    fun isGeneratorAvailable(prop: MetaProperty): Boolean {
         return when (prop.type) {
             MetaProperty.Type.DATATYPE -> mapping.containsKey(prop.range.asDatatype<Any>().javaClass)
             else -> false
