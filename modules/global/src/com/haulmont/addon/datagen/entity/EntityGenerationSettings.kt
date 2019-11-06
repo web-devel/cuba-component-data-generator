@@ -2,12 +2,12 @@ package com.haulmont.addon.datagen.entity
 
 
 import com.haulmont.chile.core.annotations.MetaProperty
-import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.cuba.core.entity.BaseUuidEntity
+import com.haulmont.cuba.core.entity.Entity
 
 @com.haulmont.chile.core.annotations.MetaClass(name = "datagen_EntityGenerationSettings")
-class EntityGenerationSettings(
-        val entityMetaClass: MetaClass
+class EntityGenerationSettings<T: Entity<*>>(
+        val entityClass: Class<T>
 ) : BaseUuidEntity() {
 
     @MetaProperty

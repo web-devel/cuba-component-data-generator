@@ -1,8 +1,9 @@
-package com.haulmont.addon.datagen.service;
+package com.haulmont.addon.datagen.service
 
 import com.haulmont.addon.datagen.entity.DataGenerationCommand
+import com.haulmont.addon.datagen.entity.EntityGenerationSettings
+import com.haulmont.addon.datagen.prop.generateProperty
 import com.haulmont.cuba.core.entity.Entity
-import com.haulmont.cuba.core.global.CommitContext
 import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata
 import org.springframework.stereotype.Service
@@ -16,19 +17,27 @@ class DataGenerationServiceBean : DataGenerationService {
     @Inject
     private lateinit var dataManager: DataManager
 
-    override fun generateEntities(command: DataGenerationCommand, dryRun: Boolean): List<Entity<Any>> {
-        val generatedEntities = generate(command);
+    override fun <T : Entity<*>> generateEntities(command: DataGenerationCommand<T>, dryRun: Boolean): List<T> {
+        val generatedEntities = generate(command)
         return if (dryRun) {
             generatedEntities
         } else {
-            dataManager.commit(CommitContext(generatedEntities)).toList()
+            generatedEntities.map { dataManager.commit(it) }
         }
     }
 
-    private fun generate(command: DataGenerationCommand): List<Entity<Any>> {
+    override fun <T : Entity<*>> generateEntity(settings: EntityGenerationSettings<T>): T {
+        val entity = metadata.create(settings.entityClass)
+        settings.properties.forEach {
+            entity.setValue(it.metaProperty.name, generateProperty(it))
+        }
+        return entity
+    }
+
+    private fun <T : Entity<*>> generate(command: DataGenerationCommand<T>): List<T> {
         val entityGenerationSettings = command.entityGenerationSettings!!
         return List(entityGenerationSettings.amount!!) {
-            metadata.create(entityGenerationSettings.entityMetaClass)
+            generateEntity(entityGenerationSettings)
         }
     }
 }

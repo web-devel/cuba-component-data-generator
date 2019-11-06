@@ -7,17 +7,20 @@ import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationset
 import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
+import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.Fragments
 import com.haulmont.cuba.gui.UiComponents
-import com.haulmont.cuba.gui.components.*
+import com.haulmont.cuba.gui.components.Button
+import com.haulmont.cuba.gui.components.Component
+import com.haulmont.cuba.gui.components.LookupField
+import com.haulmont.cuba.gui.components.ScrollBoxLayout
 import com.haulmont.cuba.gui.components.data.options.ListOptions
 import com.haulmont.cuba.gui.model.CollectionPropertyContainer
 import com.haulmont.cuba.gui.model.DataComponents
 import com.haulmont.cuba.gui.model.InstanceContainer
 import com.haulmont.cuba.gui.screen.*
 import com.haulmont.cuba.web.gui.components.WebGroupBox
-import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @Suppress("IncorrectCreateEntity")
@@ -39,7 +42,7 @@ class DataGenerationScreen : Screen() {
 
     // Data
     @Inject
-    private lateinit var generationCommandDc: InstanceContainer<DataGenerationCommand>
+    private lateinit var generationCommandDc: InstanceContainer<DataGenerationCommand<Entity<*>>>
     @Inject
     private lateinit var propertiesDc: CollectionPropertyContainer<PropertyGenerationSettings>
 
@@ -68,7 +71,7 @@ class DataGenerationScreen : Screen() {
             generationCommandDc.item.entityGenerationSettings = null
             return
         }
-        val entityGenerationSettings = EntityGenerationSettings(metaClass)
+        val entityGenerationSettings = EntityGenerationSettings(metaClass.getJavaClass<Entity<*>>())
         generationCommandDc.item.entityGenerationSettings = entityGenerationSettings
 
         metaClass.properties
