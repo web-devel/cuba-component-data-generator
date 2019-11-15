@@ -11,6 +11,12 @@ class StringPropertyGenerationSettings : PropertyGenerationSettings() {
     @MetaProperty
     private var strategy: String? = StringPropertyGenerationStrategy.FAKER.id
 
+    @MetaProperty
+    var fakerProvider: String? = null
+
+    @MetaProperty
+    var fakerProviderFunction: String? = null
+
     fun getStrategy(): StringPropertyGenerationStrategy? = strategy?.let { StringPropertyGenerationStrategy.fromId(it) }
 
     fun setStrategy(strategy: StringPropertyGenerationStrategy?) {

@@ -9,7 +9,7 @@ class BooleanPropertyGenerationSettings : PropertyGenerationSettings() {
     var manualValue: Boolean? = null
 
     @MetaProperty
-    private var strategy: String? = null
+    private var strategy: String? = BooleanPropertyGenerationStrategy.RANDOM.id
 
     fun getStrategy(): BooleanPropertyGenerationStrategy? = strategy?.let { BooleanPropertyGenerationStrategy.fromId(it) }
 

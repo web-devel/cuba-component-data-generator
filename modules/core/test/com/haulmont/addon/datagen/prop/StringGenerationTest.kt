@@ -1,0 +1,36 @@
+package com.haulmont.addon.datagen.prop
+
+import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
+import io.github.serpro69.kfaker.Faker
+import io.github.serpro69.kfaker.provider.Address
+import org.junit.Test
+import org.junit.platform.commons.util.StringUtils
+
+class StringGenerationTest {
+
+    @Test
+    fun nullStrategy() {
+        val settings = stringPropertyGenerationSettings { setStrategy(null) }
+        assert(generateStringProperty(settings) == null)
+    }
+
+    @Test
+    fun manualValue() {
+        val settings = stringPropertyGenerationSettings {
+            setStrategy(StringPropertyGenerationStrategy.MANUAL)
+            manualValue = "test"
+        }
+        assert(generateStringProperty(settings) == "test")
+    }
+
+    @Test
+    fun faker() {
+        val settings = stringPropertyGenerationSettings {
+            setStrategy(StringPropertyGenerationStrategy.FAKER)
+            fakerProvider = Faker::address.name
+            fakerProviderFunction = Address::country.name
+        }
+        val generateStringProperty = generateStringProperty(settings)
+        assert(StringUtils.isNotBlank(generateStringProperty))
+    }
+}

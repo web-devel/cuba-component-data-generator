@@ -1,6 +1,6 @@
 package com.haulmont.addon.datagen.web.screens.genarate
 
-import com.haulmont.addon.datagen.PropertyGeneration
+import com.haulmont.addon.datagen.prop.PropertyGeneration
 import com.haulmont.addon.datagen.entity.*
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment

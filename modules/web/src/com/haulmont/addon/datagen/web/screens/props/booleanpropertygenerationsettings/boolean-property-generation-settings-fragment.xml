@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
-        <instance id="booleanPropertyGenerationSettingsDc"
-                  class="com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings">
-        </instance>
+        <instance id="dc"
+                  class="com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings"/>
     </data>
     <layout>
-        <hbox>
-            <lookupField property="strategy"
-                         dataContainer="booleanPropertyGenerationSettingsDc"
+        <hbox spacing="true">
+            <lookupField id="strategyField" dataContainer="dc"
+                         property="strategy"
+                         nullOptionVisible="true"
                          caption="msg://com.haulmont.addon.datagen.entity/BooleanPropertyGenerationSettings.strategy"/>
-            <checkBox property="manualValue" dataContainer="booleanPropertyGenerationSettingsDc"/>
+            <checkBox id="manualValueField" dataContainer="dc"
+                      property="manualValue"
+                      caption="msg://com.haulmont.addon.datagen.entity/BooleanPropertyGenerationSettings.manualValue"/>
         </hbox>
     </layout>
 </fragment>

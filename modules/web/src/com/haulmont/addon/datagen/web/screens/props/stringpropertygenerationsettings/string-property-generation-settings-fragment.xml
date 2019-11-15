@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
-        <instance id="stringPropertyGenerationSettingsDc"
+        <instance id="dc"
                   class="com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings"
-                  view="_local">
-            <loader/>
-        </instance>
+                  view="_local"/>
     </data>
     <layout>
-        <hbox>
-            <lookupField property="strategy" dataContainer="stringPropertyGenerationSettingsDc"/>
-            <textField property="manualValue" dataContainer="stringPropertyGenerationSettingsDc"/>
+        <hbox spacing="true">
+            <lookupField id="strategyField"
+                         dataContainer="dc"
+                         property="strategy"
+                         nullOptionVisible="true"
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.strategy"/>
+            <textField id="manualValueField" dataContainer="dc"
+                       property="manualValue"
+                       caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.manualValue"/>
+            <textField id="fakerProviderField"
+                       dataContainer="dc"
+                       property="fakerProvider"
+                       caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProvider"/>
+            <textField id="fakerProviderFunctionField"
+                       dataContainer="dc"
+                       property="fakerProviderFunction"
+                       caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProviderFunction"/>
         </hbox>
     </layout>
 </fragment>

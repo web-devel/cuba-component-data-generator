@@ -55,7 +55,6 @@ configure([globalModule, coreModule, webModule]) {
     apply(plugin: 'kotlin')
 
     dependencies {
-        compile 'io.github.serpro69:kotlin-faker:1.1-SNAPSHOT'
         compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlinVersion")
         testImplementation("io.kotlintest:kotlintest-runner-junit5:3.2.1")
         testImplementation("org.junit.jupiter:junit-jupiter-api:5.5.2")
@@ -94,6 +93,7 @@ configure(coreModule) {
     }
 
     dependencies {
+        compile 'io.github.serpro69:kotlin-faker:1.1-SNAPSHOT'
         compile(globalModule)
         compileOnly(servletApi)
         jdbc(postgres)
