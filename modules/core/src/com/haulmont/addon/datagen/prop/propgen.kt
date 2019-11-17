@@ -1,11 +1,9 @@
 package com.haulmont.addon.datagen.prop
 
 import com.haulmont.addon.datagen.entity.*
-import io.github.serpro69.kfaker.Faker
-import io.github.serpro69.kfaker.provider.Ancient
+import com.haulmont.addon.datagen.service.FakerService
+import com.haulmont.cuba.core.global.AppBeans
 import org.apache.commons.lang3.RandomUtils
-import kotlin.reflect.KProperty1
-import kotlin.reflect.full.memberProperties
 
 fun generateProperty(settings: PropertyGenerationSettings): Any? =
         when (settings) {
@@ -18,9 +16,13 @@ fun generateStringProperty(settings: StringPropertyGenerationSettings): String? 
         when (settings.getStrategy()) {
             StringPropertyGenerationStrategy.MANUAL -> settings.manualValue
             StringPropertyGenerationStrategy.FAKER -> {
-                val faker = Faker()
-                val prop = faker::class.memberProperties.find { it.name == "ancient" }
-                ((prop as KProperty1<Any, *>).get(faker) as Ancient).god()
+                if (settings.fakerProvider == null || settings.fakerProviderFunction == null) {
+                    throw java.lang.IllegalArgumentException()
+                }
+                AppBeans.get(FakerService::class.java).generate(
+                        settings.fakerProvider!!,
+                        settings.fakerProviderFunction!!
+                )
             }
             null -> null
         }

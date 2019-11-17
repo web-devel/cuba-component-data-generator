@@ -1,12 +1,20 @@
 package com.haulmont.addon.datagen.prop
 
+import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
 import io.github.serpro69.kfaker.Faker
 import io.github.serpro69.kfaker.provider.Address
+import org.junit.ClassRule
 import org.junit.Test
 import org.junit.platform.commons.util.StringUtils
 
 class StringGenerationTest {
+
+    companion object {
+        @ClassRule
+        @JvmField
+        var cont: DatagenTestContainer = DatagenTestContainer.Common.INSTANCE
+    }
 
     @Test
     fun nullStrategy() {

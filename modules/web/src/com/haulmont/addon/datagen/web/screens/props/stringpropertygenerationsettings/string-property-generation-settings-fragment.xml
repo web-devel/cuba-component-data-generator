@@ -15,14 +15,14 @@
             <textField id="manualValueField" dataContainer="dc"
                        property="manualValue"
                        caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.manualValue"/>
-            <textField id="fakerProviderField"
-                       dataContainer="dc"
-                       property="fakerProvider"
-                       caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProvider"/>
-            <textField id="fakerProviderFunctionField"
-                       dataContainer="dc"
-                       property="fakerProviderFunction"
-                       caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProviderFunction"/>
+            <lookupField id="fakerProviderField"
+                         dataContainer="dc"
+                         property="fakerProvider"
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProvider"/>
+            <lookupField id="fakerProviderFunctionField"
+                         dataContainer="dc"
+                         property="fakerProviderFunction"
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProviderFunction"/>
         </hbox>
     </layout>
 </fragment>

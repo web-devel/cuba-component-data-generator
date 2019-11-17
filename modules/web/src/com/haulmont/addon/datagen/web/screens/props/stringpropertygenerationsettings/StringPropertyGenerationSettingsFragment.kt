@@ -2,6 +2,7 @@ package com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationset
 
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
+import com.haulmont.addon.datagen.service.FakerService
 import com.haulmont.cuba.gui.components.HasValue
 import com.haulmont.cuba.gui.components.LookupField
 import com.haulmont.cuba.gui.components.TextField
@@ -17,15 +18,19 @@ import javax.inject.Inject
 class StringPropertyGenerationSettingsFragment : ScreenFragment() {
 
     @Inject
+    private lateinit var fakerService: FakerService
+
+    @Inject
     private lateinit var dc: InstanceContainer<StringPropertyGenerationSettings>
 
     // UI
     @Inject
-    private lateinit var fakerProviderField: TextField<String>
+    private lateinit var fakerProviderField: LookupField<String>
     @Inject
-    private lateinit var fakerProviderFunctionField: TextField<String>
+    private lateinit var fakerProviderFunctionField: LookupField<String>
     @Inject
     private lateinit var manualValueField: TextField<String>
+
     @Inject
     private lateinit var strategyField: LookupField<StringPropertyGenerationStrategy>
 
@@ -37,6 +42,14 @@ class StringPropertyGenerationSettingsFragment : ScreenFragment() {
     @Subscribe
     private fun onInit(event: InitEvent) {
         updateVisibleFields()
+        fakerProviderField.setOptionsList(fakerService.getProviderNamesList())
+        fakerProviderField.addValueChangeListener() { changeEvent ->
+            if (changeEvent.value == null) {
+                fakerProviderFunctionField.setOptionsList(emptyList())
+            } else {
+                fakerProviderFunctionField.setOptionsList(fakerService.getProviderFunctionsNameList(changeEvent.value!!))
+            }
+        }
     }
 
     @Subscribe("strategyField")

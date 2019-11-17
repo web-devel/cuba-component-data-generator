@@ -13,6 +13,7 @@
             <map>
                 <entry key="datagen_DataGenerationService"
                        value="com.haulmont.addon.datagen.service.DataGenerationService"/>
+                <entry key="datagen_FakerService" value="com.haulmont.addon.datagen.service.FakerService"/>
             </map>
         </property>
     </bean>
