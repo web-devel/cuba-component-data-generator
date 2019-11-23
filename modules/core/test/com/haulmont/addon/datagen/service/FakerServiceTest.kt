@@ -5,7 +5,6 @@ import com.haulmont.cuba.core.global.AppBeans
 import io.github.serpro69.kfaker.Faker
 import io.github.serpro69.kfaker.provider.Address
 import io.github.serpro69.kfaker.provider.Ancient
-import io.github.serpro69.kfaker.provider.Beer
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
@@ -31,8 +30,8 @@ class FakerServiceTest {
     fun testProvidersList() {
         val providers = fakerService.getProviderNamesList()
         val someExistingProviders = listOf(
-                Ancient::class.simpleName,
-                Beer::class.simpleName
+                Faker::ancient.name,
+                Faker::beer.name
         )
         assert(providers.containsAll(someExistingProviders))
     }
