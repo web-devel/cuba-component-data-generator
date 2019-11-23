@@ -1,7 +1,9 @@
-# CUBA Platform Application Component - Data Generator
+[![Build Status](https://travis-ci.org/web-devel/cuba-component-data-generator.svg?branch=master)](https://travis-ci.org/web-devel/cuba-component-data-generator)
+
+# CUBA Component - Data Generator
 
 Application component which lets you generate fake data (works for persistent entities).
-May be useful for demo and test projects.
+May be useful for demo and test projects as well as for real projects when it's not possible to retrieve a dump.
 
 ## Installation
 

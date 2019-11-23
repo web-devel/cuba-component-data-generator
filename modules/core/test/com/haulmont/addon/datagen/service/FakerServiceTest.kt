@@ -25,7 +25,6 @@ class FakerServiceTest {
         fakerService = AppBeans.get(FakerService::class.java)
     }
 
-
     @Test
     fun testProvidersList() {
         val providers = fakerService.getProviderNamesList()
