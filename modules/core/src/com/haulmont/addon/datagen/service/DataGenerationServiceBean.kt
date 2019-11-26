@@ -2,7 +2,7 @@ package com.haulmont.addon.datagen.service
 
 import com.haulmont.addon.datagen.entity.DataGenerationCommand
 import com.haulmont.addon.datagen.entity.EntityGenerationSettings
-import com.haulmont.addon.datagen.prop.generateProperty
+import com.haulmont.addon.datagen.generation.PropertyGeneration.generateProperty
 import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata

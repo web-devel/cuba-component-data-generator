@@ -93,7 +93,7 @@ configure(coreModule) {
     }
 
     dependencies {
-        compile 'io.github.serpro69:kotlin-faker:1.1-SNAPSHOT'
+        compile 'io.github.serpro69:kotlin-faker:1.0'
         compile(globalModule)
         compileOnly(servletApi)
         jdbc(postgres)

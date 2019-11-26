@@ -1,7 +1,8 @@
-package com.haulmont.addon.datagen.prop
+package com.haulmont.addon.datagen.generation
 
 import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
+import com.haulmont.addon.datagen.generation.StringGenerator.generateStringProperty
 import io.github.serpro69.kfaker.Faker
 import io.github.serpro69.kfaker.provider.Address
 import org.junit.ClassRule

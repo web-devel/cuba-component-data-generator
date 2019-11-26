@@ -17,3 +17,10 @@ https://doc.cuba-platform.com/studio/#add_ons
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
 | 7.1.x            | 0.1.x          |
+
+### Supported Attribute Types
+
+* DataTypes
+  * String
+  * Boolean
+

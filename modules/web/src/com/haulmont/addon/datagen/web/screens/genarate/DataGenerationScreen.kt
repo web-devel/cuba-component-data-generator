@@ -1,6 +1,6 @@
 package com.haulmont.addon.datagen.web.screens.genarate
 
-import com.haulmont.addon.datagen.prop.PropertyGeneration
+import com.haulmont.addon.datagen.generation.DataGenerationSettings
 import com.haulmont.addon.datagen.entity.*
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
@@ -77,7 +77,7 @@ class DataGenerationScreen : Screen() {
         metaClass.properties
                 .filter { shouldBeGenerated(it) }
                 .forEach {
-                    val propSettings = PropertyGeneration.createSettings(it) ?: return
+                    val propSettings = DataGenerationSettings.createSettings(it) ?: return
                     entityGenerationSettings.properties.add(propSettings)
                     propertiesConfigBox.add(createPropertyGenerationUI(it, propSettings))
                 }
@@ -122,7 +122,7 @@ class DataGenerationScreen : Screen() {
     }
 
     private fun shouldBeGenerated(it: MetaProperty) =
-            PropertyGeneration.isGeneratorAvailable(it)
+            DataGenerationSettings.isGeneratorAvailable(it)
                     && !metadata.tools.isSystem(it)
                     && metadata.tools.isPersistent(it)
 
