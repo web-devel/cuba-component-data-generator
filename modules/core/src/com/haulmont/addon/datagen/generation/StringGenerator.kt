@@ -1,17 +1,17 @@
 package com.haulmont.addon.datagen.generation
 
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
+import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy.FAKER
+import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy.MANUAL
 import com.haulmont.addon.datagen.service.FakerService
 import com.haulmont.cuba.core.global.AppBeans
-import java.lang.IllegalArgumentException
 
 object StringGenerator {
 
     fun generateStringProperty(settings: StringPropertyGenerationSettings): String? =
             when (settings.getStrategy()) {
-                StringPropertyGenerationStrategy.MANUAL -> settings.manualValue
-                StringPropertyGenerationStrategy.FAKER -> generateByFaker(settings)
+                MANUAL -> settings.manualValue
+                FAKER -> generateByFaker(settings)
                 null -> null
             }
 

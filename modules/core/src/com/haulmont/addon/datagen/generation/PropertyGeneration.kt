@@ -3,15 +3,15 @@ package com.haulmont.addon.datagen.generation
 import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
-import com.haulmont.addon.datagen.generation.BooleanGenerator.generateBooleanProperty
-import com.haulmont.addon.datagen.generation.StringGenerator.generateStringProperty
+import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 
 object PropertyGeneration {
 
     fun generateProperty(settings: PropertyGenerationSettings): Any? =
             when (settings) {
-                is BooleanPropertyGenerationSettings -> generateBooleanProperty(settings)
-                is StringPropertyGenerationSettings -> generateStringProperty(settings)
+                is BooleanPropertyGenerationSettings -> BooleanGenerator.generateBooleanProperty(settings)
+                is StringPropertyGenerationSettings -> StringGenerator.generateStringProperty(settings)
+                is NumberPropGenSettings -> NumberGenerator.generateNumberProperty(settings)
                 else -> throw IllegalArgumentException("Property generator is not found")
             }
 

@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
     <persistence-unit name="cuba-component-data-generator" transaction-type="RESOURCE_LOCAL">
-
-        <class>com.haulmont.addon.datagen.entity.number.NumberPropGenSettings</class>
     </persistence-unit>
 </persistence>

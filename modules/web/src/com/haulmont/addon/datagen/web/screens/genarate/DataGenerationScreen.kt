@@ -2,8 +2,10 @@ package com.haulmont.addon.datagen.web.screens.genarate
 
 import com.haulmont.addon.datagen.generation.DataGenerationSettings
 import com.haulmont.addon.datagen.entity.*
+import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
+import com.haulmont.addon.datagen.web.screens.props.numberpropgensettings.NumberPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
@@ -116,6 +118,9 @@ class DataGenerationScreen : Screen() {
             }
             is StringPropertyGenerationSettings ->
                 fragments.create(this, StringPropertyGenerationSettingsFragment::class.java)
+                        .setItem(propSettings)
+            is NumberPropGenSettings ->
+                fragments.create(this, NumberPropGenSettingsFragment::class.java)
                         .setItem(propSettings)
             else -> throw IllegalStateException("Unsupported Property")
         }

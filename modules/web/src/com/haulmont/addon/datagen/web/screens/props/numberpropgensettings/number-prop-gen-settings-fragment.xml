@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="dc"
+                  class="com.haulmont.addon.datagen.entity.number.NumberPropGenSettings"
+                  view="_local"/>
+    </data>
+    <layout>
+        <hbox spacing="true">
+            <lookupField id="strategyField" dataContainer="dc"
+                         property="strategy"
+                         nullOptionVisible="true"
+                         caption="msg://com.haulmont.addon.datagen.entity.number/NumberPropGenSettings.strategy"/>
+            <textField id="manualIntegerValue"
+                       dataContainer="dc"
+                       property="manualIntegerValue"
+                       caption="msg://com.haulmont.addon.datagen.entity.number/NumberPropGenSettings.manualIntegerValue"/>
+            <textField id="manualFloatValue"
+                       dataContainer="dc"
+                       property="manualFloatValue"
+                       caption="msg://com.haulmont.addon.datagen.entity.number/NumberPropGenSettings.manualFloatValue"/>
+            <textField id="minRandomValue"
+                       dataContainer="dc"
+                       property="minRandomValue"
+                       caption="msg://com.haulmont.addon.datagen.entity.number/NumberPropGenSettings.minRandomValue"/>
+            <textField id="maxRandomValue"
+                       dataContainer="dc"
+                       property="maxRandomValue"
+                       caption="msg://com.haulmont.addon.datagen.entity.number/NumberPropGenSettings.maxRandomValue"/>
+
+        </hbox>
+    </layout>
+</fragment>
+

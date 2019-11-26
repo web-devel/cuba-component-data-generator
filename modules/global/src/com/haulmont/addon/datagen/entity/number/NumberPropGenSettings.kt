@@ -1,23 +1,32 @@
 package com.haulmont.addon.datagen.entity.number
 
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
-import javax.persistence.Column
-import javax.persistence.Entity
+import com.haulmont.chile.core.annotations.MetaClass
+import com.haulmont.chile.core.annotations.MetaProperty
 
-@Entity(name = "datagen_NumberPropGenSettings")
+@MetaClass(name = "datagen_NumberPropGenSettings")
 class NumberPropGenSettings : PropertyGenerationSettings() {
-    @Column(name = "MANUAL_VALUE")
+
+    @MetaProperty
+    private var strategy: String? = NumberPropGenStrategy.RANDOM.id
+
+    @MetaProperty
     var manualIntegerValue: Long? = null
 
-    @Column(name = "MIN_RANDOM_VALUE")
-    var minRandomValue: Long? = null
-
-    @Column(name = "MAX_RANDOM_VALUE")
-    var maxRandomValue: String? = null
-
-    @Column(name = "MANUAL_FLOAT_VALUE")
+    @MetaProperty
     var manualFloatValue: Double? = null
 
+    @MetaProperty
+    var minRandomValue: Long? = null
+
+    @MetaProperty
+    var maxRandomValue: Long? = null
+
+    fun getStrategy(): NumberPropGenStrategy? = strategy?.let { NumberPropGenStrategy.fromId(it) }
+
+    fun setStrategy(strategy: NumberPropGenStrategy?) {
+        this.strategy = strategy?.id
+    }
 
     companion object {
         private const val serialVersionUID = -6572186461873560891L
