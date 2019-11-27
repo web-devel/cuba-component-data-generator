@@ -3,6 +3,7 @@ package com.haulmont.addon.datagen.generation
 import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 
 object PropertyGeneration {
@@ -12,6 +13,7 @@ object PropertyGeneration {
                 is BooleanPropertyGenerationSettings -> BooleanGenerator.generateBooleanProperty(settings)
                 is StringPropertyGenerationSettings -> StringGenerator.generateStringProperty(settings)
                 is NumberPropGenSettings -> NumberGenerator.generateNumberProperty(settings)
+                is EnumPropGenSettings -> EnumGenerator.generateEnumProperty(settings)
                 else -> throw IllegalArgumentException("Property generator is not found")
             }
 

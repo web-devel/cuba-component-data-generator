@@ -49,7 +49,12 @@ class TestEntity : StandardEntity() {
     var uuidAttr: UUID? = null
 
     @Column(name = "ENUM_ATTR")
-    private var enumAttr: String? = null
+    var strEnumAttr: String? = null
+        private set
+
+    @Column(name = "INT_ENUM_ATTR")
+    var intEnumAttr: Int? = null
+        private set
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ASSOC_ONE_TO_ONE_ID")
@@ -65,10 +70,16 @@ class TestEntity : StandardEntity() {
     @JoinColumn(name = "USER_COMPOSITION_ONE_TO_ONE_ID")
     var userCompositionOneToOne: User? = null
 
-    fun getEnumAttr(): TestEnum? = enumAttr?.let { TestEnum.fromId(it) }
+    fun getIntEnumAttr(): TestIntEnum? = intEnumAttr?.let { TestIntEnum.fromId(it) }
 
-    fun setEnumAttr(enumAttr: TestEnum?) {
-        this.enumAttr = enumAttr?.id
+    fun setIntEnumAttr(intEnumAttr: TestIntEnum?) {
+        this.intEnumAttr = intEnumAttr?.id
+    }
+
+    fun getStrEnumAttr(): TestStringEnum? = strEnumAttr?.let { TestStringEnum.fromId(it) }
+
+    fun setStrEnumAttr(enumAttr: TestStringEnum?) {
+        this.strEnumAttr = enumAttr?.id
     }
 
     companion object {

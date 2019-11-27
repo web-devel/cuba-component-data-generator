@@ -8,6 +8,7 @@
         <class>com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.number.NumberPropGenSettings</class>
+        <class>com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings</class>
     </metadata-model>
 
 </metadata>
