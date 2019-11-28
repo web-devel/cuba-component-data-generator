@@ -18,9 +18,24 @@ https://doc.cuba-platform.com/studio/#add_ons
 | ---------------- | -------------- |
 | 7.1.x            | 0.1.x          |
 
+### Dependencies
+
+[Faker](https://github.com/serpro69/kotlin-faker) is used to generate conscious strings.
+
+Add the Faker repository to the `build.gradle`:
+```groovy
+    maven {
+        url 'https://dl.bintray.com/serpro69/maven/'
+    }
+```
+
 ### Supported Attribute Types
 
 * DataTypes
   * String
   * Boolean
-
+  * Integer
+  * Long
+  * Double
+  * BigDecimal
+* Enum

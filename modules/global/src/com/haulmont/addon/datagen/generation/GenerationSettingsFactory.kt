@@ -10,7 +10,7 @@ import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
 import java.lang.IllegalArgumentException
 
-object DataGenerationSettings {
+object GenerationSettingsFactory {
 
     private val dType2Settings = mapOf(
             java.lang.String::class.java to StringPropertyGenerationSettings::class.java,
@@ -21,20 +21,30 @@ object DataGenerationSettings {
             java.math.BigDecimal::class.java to NumberPropGenSettings::class.java
     )
 
+    fun createSettings(prop: MetaProperty): PropertyGenerationSettings? {
+        val metadata = AppBeans.get(Metadata::class.java)
+        return when (prop.type) {
+            MetaProperty.Type.DATATYPE -> {
+                val dtypeJavaClass = prop.range.asDatatype<Any>().javaClass
+                val settingsClass = dType2Settings[dtypeJavaClass] ?: throw IllegalArgumentException("Unsupported datatype for property ${prop.name}")
+                val settings = settingsClass.newInstance()
+                settings.metaProperty = prop
+                return settings
+            }
+            MetaProperty.Type.ENUM -> {
+                val enumPropGenSettings = EnumPropGenSettings()
+                enumPropGenSettings.metaProperty = prop
+                return enumPropGenSettings
+            }
+            else -> throw IllegalArgumentException()
+        }
+    }
+
     fun isGeneratorAvailable(prop: MetaProperty): Boolean {
         return when (prop.type) {
             MetaProperty.Type.DATATYPE -> dType2Settings.containsKey(prop.range.asDatatype<Any>().javaClass)
             MetaProperty.Type.ENUM -> true
             else -> false
-        }
-    }
-
-    fun createSettings(prop: MetaProperty): PropertyGenerationSettings? {
-        val metadata = AppBeans.get(Metadata::class.java)
-        return when (prop.type) {
-            MetaProperty.Type.DATATYPE -> metadata.create(dType2Settings[prop.range.asDatatype<Any>().javaClass])
-            MetaProperty.Type.ENUM -> metadata.create(EnumPropGenSettings::class.java)
-            else -> throw IllegalArgumentException()
         }
     }
 }

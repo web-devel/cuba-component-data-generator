@@ -10,11 +10,7 @@ class EnumPropGenSettings : PropertyGenerationSettings() {
     @MetaProperty
     private var strategy: String? = null
 
-    @MetaProperty
-    var manualIntValue: Int? = null
-
-    @MetaProperty
-    var manualStrValue: String? = null
+    var manualValue: Enum<*>? = null
 
     fun getStrategy(): EnumPropGenStrategy? = strategy?.let { EnumPropGenStrategy.fromId(it) }
 
