@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="dc"
+                  class="com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings">
+        </instance>
+    </data>
+    <layout>
+        <hbox spacing="true">
+            <lookupField id="strategyField" dataContainer="dc"
+                         property="strategy"
+                         nullOptionVisible="true"
+                         caption="msg://com.haulmont.addon.datagen.entity.enm/EnumPropGenSettings.strategy"/>
+            <lookupField id="manualValueField"
+                         caption="msg://com.haulmont.addon.datagen.entity.enm/EnumPropGenSettings.manualValue"/>
+        </hbox>
+    </layout>
+</fragment>
+

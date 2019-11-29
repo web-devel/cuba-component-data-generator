@@ -2,9 +2,11 @@ package com.haulmont.addon.datagen.web.screens.genarate
 
 import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.addon.datagen.entity.*
+import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
+import com.haulmont.addon.datagen.web.screens.props.enumpropgensettings.EnumPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.numberpropgensettings.NumberPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
 import com.haulmont.chile.core.model.MetaClass
@@ -112,15 +114,17 @@ class DataGenerationScreen : Screen() {
 
     fun createPropFragment(propSettings: PropertyGenerationSettings): ScreenFragment {
         return when (propSettings) {
-            is BooleanPropertyGenerationSettings -> {
+            is BooleanPropertyGenerationSettings ->
                 fragments.create(this, BooleanPropertyGenerationSettingsFragment::class.java)
                         .setItem(propSettings)
-            }
             is StringPropertyGenerationSettings ->
                 fragments.create(this, StringPropertyGenerationSettingsFragment::class.java)
                         .setItem(propSettings)
             is NumberPropGenSettings ->
                 fragments.create(this, NumberPropGenSettingsFragment::class.java)
+                        .setItem(propSettings)
+            is EnumPropGenSettings ->
+                fragments.create(this, EnumPropGenSettingsFragment::class.java)
                         .setItem(propSettings)
             else -> throw IllegalStateException("Unsupported Property")
         }

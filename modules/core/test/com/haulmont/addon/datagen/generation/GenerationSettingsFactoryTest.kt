@@ -4,6 +4,7 @@ import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.TestEntity
+import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
@@ -31,6 +32,7 @@ class GenerationSettingsFactoryTest {
     fun testSettingsGeneration() {
         assert(createSettings(TestEntity::city.name) is StringPropertyGenerationSettings)
         assert(createSettings(TestEntity::bigDecimal.name) is NumberPropGenSettings)
+        assert(createSettings(TestEntity::strEnumAttr.name) is EnumPropGenSettings)
     }
 
     private fun createSettings(propName: String): PropertyGenerationSettings? {
