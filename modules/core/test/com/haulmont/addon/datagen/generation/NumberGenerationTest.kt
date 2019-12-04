@@ -1,7 +1,7 @@
 package com.haulmont.addon.datagen.generation
 
 import com.haulmont.addon.datagen.DatagenTestContainer
-import com.haulmont.addon.datagen.entity.TestEntity
+import com.haulmont.addon.datagen.entity.TestEntityKotlin
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenStrategy
 import com.haulmont.addon.datagen.generation.NumberGenerator.generateNumberProperty
@@ -39,7 +39,7 @@ class NumberGenerationTest {
 
     @Test
     fun manualInteger() {
-        val intMetaProperty = metadata.getClassNN(TestEntity::class.java).getPropertyNN(TestEntity::intgr.name)
+        val intMetaProperty = metadata.getClassNN(TestEntityKotlin::class.java).getPropertyNN(TestEntityKotlin::intgr.name)
         val settings = createSettings(intMetaProperty)
         settings.manualIntegerValue = 42
 
@@ -51,7 +51,7 @@ class NumberGenerationTest {
 
     @Test
     fun randomInteger() {
-        val intMetaProperty = metadata.getClassNN(TestEntity::class.java).getPropertyNN(TestEntity::intgr.name)
+        val intMetaProperty = metadata.getClassNN(TestEntityKotlin::class.java).getPropertyNN(TestEntityKotlin::intgr.name)
         val settings = createSettings(intMetaProperty, NumberPropGenStrategy.RANDOM)
         settings.minRandomValue = 0
         settings.maxRandomValue = 1
@@ -69,7 +69,7 @@ class NumberGenerationTest {
 
     @Test
     fun manualLong() {
-        val intMetaProperty = metadata.getClassNN(TestEntity::class.java).getPropertyNN(TestEntity::lng.name)
+        val intMetaProperty = metadata.getClassNN(TestEntityKotlin::class.java).getPropertyNN(TestEntityKotlin::lng.name)
         val settings = createSettings(intMetaProperty)
         settings.manualIntegerValue = 10000L
 
@@ -81,7 +81,7 @@ class NumberGenerationTest {
 
     @Test
     fun manualDouble() {
-        val intMetaProperty = metadata.getClassNN(TestEntity::class.java).getPropertyNN(TestEntity::dbl.name)
+        val intMetaProperty = metadata.getClassNN(TestEntityKotlin::class.java).getPropertyNN(TestEntityKotlin::dbl.name)
         val settings = createSettings(intMetaProperty)
         settings.manualFloatValue = 1.5
 
@@ -93,7 +93,7 @@ class NumberGenerationTest {
 
     @Test
     fun manualBigDecimal() {
-        val intMetaProperty = metadata.getClassNN(TestEntity::class.java).getPropertyNN(TestEntity::bigDecimal.name)
+        val intMetaProperty = metadata.getClassNN(TestEntityKotlin::class.java).getPropertyNN(TestEntityKotlin::bigDecimal.name)
         val settings = createSettings(intMetaProperty)
         settings.manualFloatValue = 1.5
 

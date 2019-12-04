@@ -3,7 +3,7 @@ package com.haulmont.addon.datagen.generation
 import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.TestEntity
+import com.haulmont.addon.datagen.entity.TestEntityKotlin
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.cuba.core.global.AppBeans
@@ -30,13 +30,13 @@ class GenerationSettingsFactoryTest {
 
     @Test
     fun testSettingsGeneration() {
-        assert(createSettings(TestEntity::city.name) is StringPropertyGenerationSettings)
-        assert(createSettings(TestEntity::bigDecimal.name) is NumberPropGenSettings)
-        assert(createSettings(TestEntity::strEnumAttr.name) is EnumPropGenSettings)
+        assert(createSettings(TestEntityKotlin::city.name) is StringPropertyGenerationSettings)
+        assert(createSettings(TestEntityKotlin::bigDecimal.name) is NumberPropGenSettings)
+        assert(createSettings(TestEntityKotlin::strEnumAttr.name) is EnumPropGenSettings)
     }
 
     private fun createSettings(propName: String): PropertyGenerationSettings? {
-        val metaClass = metadata.getClassNN(TestEntity::class.java)
+        val metaClass = metadata.getClassNN(TestEntityKotlin::class.java)
         return GenerationSettingsFactory.createSettings(metaClass.getPropertyNN(propName))
     }
 

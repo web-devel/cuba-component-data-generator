@@ -12,7 +12,7 @@ import javax.persistence.*
 
 @Table(name = "DATAGEN_TEST_ENTITY")
 @Entity(name = "datagen_TestEntity")
-class TestEntity : StandardEntity() {
+class TestEntityKotlin : StandardEntity() {
 
     @Column(name = "CITY")
     var city: String? = null

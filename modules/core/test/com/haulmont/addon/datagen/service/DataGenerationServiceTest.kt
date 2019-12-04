@@ -2,7 +2,7 @@ package com.haulmont.addon.datagen.service
 
 import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.EntityGenerationSettings
-import com.haulmont.addon.datagen.entity.TestEntity
+import com.haulmont.addon.datagen.entity.TestEntityKotlin
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
 import org.junit.After
@@ -30,9 +30,9 @@ class DataGenerationServiceTest {
 
     @Test
     fun testGeneratedEntityClass() {
-        val settings = EntityGenerationSettings(TestEntity::class.java)
+        val settings = EntityGenerationSettings(TestEntityKotlin::class.java)
         val generated = dgs.generateEntity(settings)
-        assert(TestEntity::class.java.isAssignableFrom(generated::class.java))
+        assert(TestEntityKotlin::class.java.isAssignableFrom(generated::class.java))
     }
 
 //    @Test

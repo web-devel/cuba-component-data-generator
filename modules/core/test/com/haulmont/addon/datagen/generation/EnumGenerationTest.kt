@@ -1,8 +1,7 @@
 package com.haulmont.addon.datagen.generation
 
 import com.haulmont.addon.datagen.DatagenTestContainer
-import com.haulmont.addon.datagen.entity.EntityGenerationSettings
-import com.haulmont.addon.datagen.entity.TestEntity
+import com.haulmont.addon.datagen.entity.TestEntityKotlin
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenStrategy
 import com.haulmont.cuba.core.global.AppBeans
@@ -32,7 +31,7 @@ class EnumGenerationTest {
     @Test
     fun nullStrategy() {
         val settings = EnumPropGenSettings()
-        settings.metaProperty = metadata.getClassNN(TestEntity::class.java).getPropertyNN(TestEntity::strEnumAttr.name)
+        settings.metaProperty = metadata.getClassNN(TestEntityKotlin::class.java).getPropertyNN(TestEntityKotlin::strEnumAttr.name)
         settings.setStrategy(null)
         val enum = EnumGenerator.generateEnumProperty(settings)
         assert(enum == null)
