@@ -22,6 +22,7 @@
                 </form>
                 <button id="generateBtn"
                         caption="msg://generate"
+                        stylename="friendly"
                         icon="font-icon:GEAR"/>
             </hbox>
         </groupBox>

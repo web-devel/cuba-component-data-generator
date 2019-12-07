@@ -42,4 +42,13 @@ class StringGenerationTest {
         val generateStringProperty = generateStringProperty(settings)
         assert(StringUtils.isNotBlank(generateStringProperty))
     }
+
+    @Test
+    fun fakerNull() {
+        val settings = stringPropertyGenerationSettings {
+            setStrategy(StringPropertyGenerationStrategy.FAKER)
+        }
+        val generateStringProperty = generateStringProperty(settings)
+        assert(generateStringProperty == null)
+    }
 }

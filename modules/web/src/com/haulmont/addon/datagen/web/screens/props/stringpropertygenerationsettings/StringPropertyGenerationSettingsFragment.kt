@@ -42,14 +42,19 @@ class StringPropertyGenerationSettingsFragment : ScreenFragment() {
     @Subscribe
     private fun onInit(event: InitEvent) {
         updateVisibleFields()
-        fakerProviderField.setOptionsList(fakerService.getProviderNamesList())
+        val fakerProviders = fakerService.getProviderNamesList()
+        fakerProviderField.setOptionsList(fakerProviders)
         fakerProviderField.addValueChangeListener() { changeEvent ->
             if (changeEvent.value == null) {
                 fakerProviderFunctionField.setOptionsList(emptyList())
+                fakerProviderFunctionField.value = null
             } else {
-                fakerProviderFunctionField.setOptionsList(fakerService.getProviderFunctionsNameList(changeEvent.value!!))
+                val funNames = fakerService.getProviderFunctionsNameList(changeEvent.value!!)
+                fakerProviderFunctionField.setOptionsList(funNames)
+                fakerProviderFunctionField.value = funNames.firstOrNull()
             }
         }
+        fakerProviderField.value = fakerProviders.firstOrNull()
     }
 
     @Subscribe("strategyField")

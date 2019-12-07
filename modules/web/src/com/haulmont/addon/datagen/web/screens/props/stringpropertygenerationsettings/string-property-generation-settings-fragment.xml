@@ -18,11 +18,13 @@
             <lookupField id="fakerProviderField"
                          dataContainer="dc"
                          property="fakerProvider"
-                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProvider"/>
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProvider"
+                         nullOptionVisible="false"/>
             <lookupField id="fakerProviderFunctionField"
                          dataContainer="dc"
                          property="fakerProviderFunction"
-                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProviderFunction"/>
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProviderFunction"
+                         nullOptionVisible="false"/>
         </hbox>
     </layout>
 </fragment>

@@ -6,9 +6,6 @@ import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.chile.core.model.MetaProperty
-import com.haulmont.cuba.core.global.AppBeans
-import com.haulmont.cuba.core.global.Metadata
-import java.lang.IllegalArgumentException
 
 object GenerationSettingsFactory {
 
@@ -22,19 +19,18 @@ object GenerationSettingsFactory {
     )
 
     fun createSettings(prop: MetaProperty): PropertyGenerationSettings? {
-        val metadata = AppBeans.get(Metadata::class.java)
         return when (prop.type) {
             MetaProperty.Type.DATATYPE -> {
                 val dtypeJavaClass = prop.range.asDatatype<Any>().javaClass
                 val settingsClass = dType2Settings[dtypeJavaClass] ?: throw IllegalArgumentException("Unsupported datatype for property ${prop.name}")
                 val settings = settingsClass.newInstance()
                 settings.metaProperty = prop
-                return settings
+                settings
             }
             MetaProperty.Type.ENUM -> {
                 val enumPropGenSettings = EnumPropGenSettings()
                 enumPropGenSettings.metaProperty = prop
-                return enumPropGenSettings
+                enumPropGenSettings
             }
             else -> throw IllegalArgumentException()
         }

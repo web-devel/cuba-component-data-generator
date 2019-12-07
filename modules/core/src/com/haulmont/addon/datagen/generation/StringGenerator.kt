@@ -15,13 +15,16 @@ object StringGenerator {
                 null -> null
             }
 
-    private fun generateByFaker(settings: StringPropertyGenerationSettings): String {
-        if (settings.fakerProvider == null || settings.fakerProviderFunction == null) {
-            throw IllegalArgumentException()
+    private fun generateByFaker(settings: StringPropertyGenerationSettings): String? {
+        val fakerProvider = settings.fakerProvider
+        val fakerProviderFunction = settings.fakerProviderFunction
+
+        if (fakerProvider == null || fakerProviderFunction == null) {
+            return null
         }
         return AppBeans.get(FakerService::class.java).generate(
-                settings.fakerProvider!!,
-                settings.fakerProviderFunction!!
+                fakerProvider,
+                fakerProviderFunction
         )
     }
 

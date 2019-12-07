@@ -105,11 +105,13 @@ class DataGenerationScreen : Screen() {
         propDC.setItem(settings)
         screenData.registerContainer("${prop.name}Dc", propDC) // todo unregister
 
-        val webGroupBox = uiComponents.create<WebGroupBox>(WebGroupBox::class.java)
-        webGroupBox.caption = prop.name
-        val createPropFragment = createPropFragment(settings)
-        webGroupBox.add(createPropFragment.fragment)
-        return webGroupBox
+        val propertySettingsBox = uiComponents.create<WebGroupBox>(WebGroupBox::class.java)
+        propertySettingsBox.caption = prop.name
+        propertySettingsBox.styleName = "light"
+
+        val propFragment = createPropFragment(settings)
+        propertySettingsBox.add(propFragment.fragment)
+        return propertySettingsBox
     }
 
     fun createPropFragment(propSettings: PropertyGenerationSettings): ScreenFragment {
