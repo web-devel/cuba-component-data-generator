@@ -1,29 +1,32 @@
 package com.haulmont.addon.datagen.web.screens.genarate
 
-import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.addon.datagen.entity.*
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
+import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.addon.datagen.service.DataGenerationService
+import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.enumpropgensettings.EnumPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.numberpropgensettings.NumberPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
+import com.haulmont.cuba.core.app.serialization.EntitySerializationAPI
+import com.haulmont.cuba.core.app.serialization.EntitySerializationOption
 import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.gui.Fragments
 import com.haulmont.cuba.gui.UiComponents
-import com.haulmont.cuba.gui.components.Button
-import com.haulmont.cuba.gui.components.Component
-import com.haulmont.cuba.gui.components.LookupField
-import com.haulmont.cuba.gui.components.ScrollBoxLayout
+import com.haulmont.cuba.gui.components.*
 import com.haulmont.cuba.gui.components.data.options.ListOptions
 import com.haulmont.cuba.gui.model.CollectionPropertyContainer
 import com.haulmont.cuba.gui.model.DataComponents
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.*
+import com.haulmont.cuba.gui.screen.Screen
+import com.haulmont.cuba.gui.screen.Subscribe
+import com.haulmont.cuba.gui.screen.UiController
+import com.haulmont.cuba.gui.screen.UiDescriptor
 import com.haulmont.cuba.web.gui.components.WebGroupBox
 import javax.inject.Inject
 
@@ -43,6 +46,8 @@ class DataGenerationScreen : Screen() {
     private lateinit var fragments: Fragments
     @Inject
     private lateinit var dataGenerationService: DataGenerationService
+    @Inject
+    private lateinit var entitySerializationAPI: EntitySerializationAPI
 
     // Data
     @Inject
@@ -55,6 +60,12 @@ class DataGenerationScreen : Screen() {
     private lateinit var entityLookup: LookupField<MetaClass>
     @Inject
     private lateinit var propertiesConfigBox: ScrollBoxLayout
+    @Inject
+    private lateinit var previewTextArea: TextArea<String>
+    @Inject
+    private lateinit var generationSettingsBox: GroupBoxLayout
+    @Inject
+    private lateinit var previewBox: VBoxLayout
 
     @Subscribe
     private fun onInit(event: InitEvent) {
@@ -62,21 +73,36 @@ class DataGenerationScreen : Screen() {
         updateEntitySelectLookup()
     }
 
+    @Subscribe("generateBtn")
+    private fun onGenerateBtnClick(event: Button.ClickEvent) {
+        dataGenerationService.generateEntities(this.generationCommandDc.item)
+    }
+
+
+    @Subscribe("refreshPreviewBtn")
+    private fun onRefreshPreviewBtnClick(event: Button.ClickEvent) {
+        updatePreview()
+    }
+
     private fun updateEntitySelectLookup() {
         val metaClasses = metadata.tools.allPersistentMetaClasses
                 .sortedBy { it.name }
         entityLookup.options = ListOptions(metaClasses)
-        entityLookup.addValueChangeListener { selectMetaClass(it.value) }
+        entityLookup.addValueChangeListener { handleMetaClassSelection(it.value) }
     }
 
-    private fun selectMetaClass(metaClass: MetaClass?) {
+    private fun handleMetaClassSelection(metaClass: MetaClass?) {
         propertiesConfigBox.removeAll()
         if (metaClass == null) {
             generationCommandDc.item.entityGenerationSettings = null
+            previewBox.isVisible = false
+            generationSettingsBox.isVisible = false
             return
         }
         val entityGenerationSettings = EntityGenerationSettings(metaClass.getJavaClass<Entity<*>>())
         generationCommandDc.item.entityGenerationSettings = entityGenerationSettings
+        previewBox.isVisible = true
+        generationSettingsBox.isVisible = true
 
         metaClass.properties
                 .filter { shouldBeGenerated(it) }
@@ -85,13 +111,8 @@ class DataGenerationScreen : Screen() {
                     entityGenerationSettings.properties.add(propSettings)
                     propertiesConfigBox.add(createPropertyGenerationUI(it, propSettings))
                 }
+        updatePreview()
     }
-
-    @Subscribe("generateBtn")
-    private fun onGenerateBtnClick(event: Button.ClickEvent) {
-        dataGenerationService.generateEntities(this.generationCommandDc.item)
-    }
-
 
     private fun createPropertyGenerationUI(
             prop: MetaProperty,
@@ -110,11 +131,12 @@ class DataGenerationScreen : Screen() {
         propertySettingsBox.styleName = "light"
 
         val propFragment = createPropFragment(settings)
+        propFragment.addDcPropChangeListener { e -> updatePreview() }
         propertySettingsBox.add(propFragment.fragment)
         return propertySettingsBox
     }
 
-    fun createPropFragment(propSettings: PropertyGenerationSettings): ScreenFragment {
+    private fun createPropFragment(propSettings: PropertyGenerationSettings): PropGenFragment<*> {
         return when (propSettings) {
             is BooleanPropertyGenerationSettings ->
                 fragments.create(this, BooleanPropertyGenerationSettingsFragment::class.java)
@@ -132,11 +154,21 @@ class DataGenerationScreen : Screen() {
         }
     }
 
+
     private fun shouldBeGenerated(it: MetaProperty) =
             GenerationSettingsFactory.isGeneratorAvailable(it)
                     && !metadata.tools.isSystem(it)
                     && metadata.tools.isPersistent(it)
 
+    private fun updatePreview() {
+        val entityGenerationSettings = generationCommandDc.item.entityGenerationSettings
+        if (entityGenerationSettings == null) {
+            previewTextArea.value = null
+            return
+        }
 
+        val entity = dataGenerationService.generateEntity(entityGenerationSettings)
+        val entityJson = entitySerializationAPI.toJson(entity, null, EntitySerializationOption.PRETTY_PRINT)
+        previewTextArea.value = entityJson
+    }
 }
-

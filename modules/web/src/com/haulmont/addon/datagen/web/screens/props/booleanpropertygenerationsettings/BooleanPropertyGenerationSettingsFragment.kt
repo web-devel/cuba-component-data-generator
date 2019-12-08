@@ -2,10 +2,11 @@ package com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationse
 
 import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationStrategy
+import com.haulmont.addon.datagen.web.screens.props.PropChangeListener
+import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.cuba.gui.components.CheckBox
 import com.haulmont.cuba.gui.components.HasValue
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.ScreenFragment
 import com.haulmont.cuba.gui.screen.Subscribe
 import com.haulmont.cuba.gui.screen.UiController
 import com.haulmont.cuba.gui.screen.UiDescriptor
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 @UiController("datagen_BooleanPropertyGenerationSettingsFragment")
 @UiDescriptor("boolean-property-generation-settings-fragment.xml")
-class BooleanPropertyGenerationSettingsFragment : ScreenFragment() {
+class BooleanPropertyGenerationSettingsFragment : PropGenFragment<BooleanPropertyGenerationSettings>() {
 
 
     @Inject
@@ -21,9 +22,13 @@ class BooleanPropertyGenerationSettingsFragment : ScreenFragment() {
     @Inject
     private lateinit var manualValueField: CheckBox
 
-    fun setItem(setting:BooleanPropertyGenerationSettings): BooleanPropertyGenerationSettingsFragment {
-        dc.setItem(setting)
+    override fun setItem(settings: BooleanPropertyGenerationSettings): BooleanPropertyGenerationSettingsFragment {
+        dc.setItem(settings)
         return this
+    }
+
+    override fun addDcPropChangeListener(listener: PropChangeListener<BooleanPropertyGenerationSettings>) {
+        dc.addItemPropertyChangeListener(listener)
     }
 
     @Subscribe
@@ -39,5 +44,5 @@ class BooleanPropertyGenerationSettingsFragment : ScreenFragment() {
     private fun updateShownFields(strategy: BooleanPropertyGenerationStrategy?) {
         manualValueField.isVisible = strategy == BooleanPropertyGenerationStrategy.MANUAL
     }
-    
+
 }

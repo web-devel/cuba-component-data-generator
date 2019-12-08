@@ -10,12 +10,22 @@
             </instance>
         </instance>
     </data>
-    <layout expand="propertiesConfigBox">
+    <layout expand="split">
         <lookupField id="entityLookup" caption="msg://entityLookup"/>
-        <scrollBox id="propertiesConfigBox">
-            <!--Properties are placed here-->
-        </scrollBox>
-        <groupBox>
+        <split id="split" orientation="horizontal" pos="60">
+            <scrollBox id="propertiesConfigBox" margin="true">
+                <!--Properties are placed here-->
+            </scrollBox>
+            <vbox id="previewBox" visible="false" margin="true" height="100%" expand="previewTextArea">
+                <hbox width="100%" margin="false,false,true,false">
+                    <label value="msg://Preview" box.expandRatio="0.0" align="MIDDLE_LEFT"/>
+                    <button id="refreshPreviewBtn"
+                            caption="msg://btn.updatePreview" align="TOP_RIGHT" icon="REFRESH_ACTION"/>
+                </hbox>
+                <textArea id="previewTextArea" width="100%"/>
+            </vbox>
+        </split>
+        <groupBox id="generationSettingsBox" visible="false">
             <hbox>
                 <form dataContainer="generationCommandDc">
                     <field property="saveExecutionLog"/>

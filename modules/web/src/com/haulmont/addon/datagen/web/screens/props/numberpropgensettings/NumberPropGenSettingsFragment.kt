@@ -2,10 +2,11 @@ package com.haulmont.addon.datagen.web.screens.props.numberpropgensettings
 
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenStrategy
+import com.haulmont.addon.datagen.web.screens.props.PropChangeListener
+import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.cuba.gui.components.LookupField
 import com.haulmont.cuba.gui.components.TextField
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.ScreenFragment
 import com.haulmont.cuba.gui.screen.Subscribe
 import com.haulmont.cuba.gui.screen.UiController
 import com.haulmont.cuba.gui.screen.UiDescriptor
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 @UiController("datagen_NumberPropGenSettingsFragment")
 @UiDescriptor("number-prop-gen-settings-fragment.xml")
-class NumberPropGenSettingsFragment : ScreenFragment() {
+class NumberPropGenSettingsFragment : PropGenFragment<NumberPropGenSettings>() {
     
     @Inject
     private lateinit var dc: InstanceContainer<NumberPropGenSettings>
@@ -31,9 +32,13 @@ class NumberPropGenSettingsFragment : ScreenFragment() {
     @Inject
     private lateinit var strategyField: LookupField<NumberPropGenStrategy>
 
-    fun setItem(settings: NumberPropGenSettings): NumberPropGenSettingsFragment {
+    override fun setItem(settings: NumberPropGenSettings): NumberPropGenSettingsFragment {
         dc.setItem(settings)
         return this
+    }
+
+    override fun addDcPropChangeListener(listener: PropChangeListener<NumberPropGenSettings>) {
+        dc.addItemPropertyChangeListener(listener)
     }
 
     @Subscribe

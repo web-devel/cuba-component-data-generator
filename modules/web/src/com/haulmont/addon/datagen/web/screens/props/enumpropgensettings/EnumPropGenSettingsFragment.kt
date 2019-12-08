@@ -2,9 +2,10 @@ package com.haulmont.addon.datagen.web.screens.props.enumpropgensettings
 
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenStrategy
+import com.haulmont.addon.datagen.web.screens.props.PropChangeListener
+import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.cuba.gui.components.LookupField
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.ScreenFragment
 import com.haulmont.cuba.gui.screen.Subscribe
 import com.haulmont.cuba.gui.screen.UiController
 import com.haulmont.cuba.gui.screen.UiDescriptor
@@ -12,7 +13,7 @@ import javax.inject.Inject
 
 @UiController("datagen_EnumPropGenSettingsFragment")
 @UiDescriptor("enum-prop-gen-settings-fragment.xml")
-class EnumPropGenSettingsFragment : ScreenFragment() {
+class EnumPropGenSettingsFragment : PropGenFragment<EnumPropGenSettings>() {
 
     // Data
     @Inject
@@ -24,9 +25,13 @@ class EnumPropGenSettingsFragment : ScreenFragment() {
     @Inject
     private lateinit var strategyField: LookupField<EnumPropGenStrategy>
 
-    fun setItem(settings: EnumPropGenSettings): EnumPropGenSettingsFragment {
+    override fun setItem(settings: EnumPropGenSettings): EnumPropGenSettingsFragment {
         dc.setItem(settings)
         return this
+    }
+
+    override fun addDcPropChangeListener(listener: PropChangeListener<EnumPropGenSettings>) {
+        dc.addItemPropertyChangeListener(listener)
     }
 
     @Subscribe

@@ -3,11 +3,12 @@ package com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationset
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
 import com.haulmont.addon.datagen.service.FakerService
+import com.haulmont.addon.datagen.web.screens.props.PropChangeListener
+import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.cuba.gui.components.HasValue
 import com.haulmont.cuba.gui.components.LookupField
 import com.haulmont.cuba.gui.components.TextField
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.ScreenFragment
 import com.haulmont.cuba.gui.screen.Subscribe
 import com.haulmont.cuba.gui.screen.UiController
 import com.haulmont.cuba.gui.screen.UiDescriptor
@@ -15,7 +16,7 @@ import javax.inject.Inject
 
 @UiController("datagen_StringPropertyGenerationSettingsFragment")
 @UiDescriptor("string-property-generation-settings-fragment.xml")
-class StringPropertyGenerationSettingsFragment : ScreenFragment() {
+class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropertyGenerationSettings>() {
 
     @Inject
     private lateinit var fakerService: FakerService
@@ -34,9 +35,13 @@ class StringPropertyGenerationSettingsFragment : ScreenFragment() {
     @Inject
     private lateinit var strategyField: LookupField<StringPropertyGenerationStrategy>
 
-    fun setItem(settings:StringPropertyGenerationSettings): StringPropertyGenerationSettingsFragment {
+    override fun setItem(settings: StringPropertyGenerationSettings): PropGenFragment<StringPropertyGenerationSettings> {
         dc.setItem(settings)
         return this
+    }
+
+    override fun addDcPropChangeListener(listener: PropChangeListener<StringPropertyGenerationSettings>) {
+        dc.addItemPropertyChangeListener(listener)
     }
 
     @Subscribe
