@@ -2,7 +2,7 @@ package com.haulmont.addon.datagen.generation
 
 import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.addon.datagen.entity.TestEntityKotlin
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
@@ -30,7 +30,7 @@ class GenerationSettingsFactoryTest {
 
     @Test
     fun testSettingsGeneration() {
-        assert(createSettings(TestEntityKotlin::city.name) is StringPropertyGenerationSettings)
+        assert(createSettings(TestEntityKotlin::city.name) is StringPropGenSettings)
         assert(createSettings(TestEntityKotlin::bigDecimal.name) is NumberPropGenSettings)
         assert(createSettings(TestEntityKotlin::strEnumAttr.name) is EnumPropGenSettings)
     }

@@ -5,10 +5,11 @@
         <class>com.haulmont.addon.datagen.entity.DataGenerationCommand</class>
         <class>com.haulmont.addon.datagen.entity.EntityGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.PropertyGenerationSettings</class>
-        <class>com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings</class>
-        <class>com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings</class>
+        <class>com.haulmont.addon.datagen.entity.str.StringPropGenSettings</class>
+        <class>com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.number.NumberPropGenSettings</class>
         <class>com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings</class>
+        <class>com.haulmont.addon.datagen.entity.DataGenerationCommand</class>
     </metadata-model>
 
 </metadata>

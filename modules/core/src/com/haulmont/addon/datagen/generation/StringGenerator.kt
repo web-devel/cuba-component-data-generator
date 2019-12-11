@@ -1,21 +1,21 @@
 package com.haulmont.addon.datagen.generation
 
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy.FAKER
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy.MANUAL
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
+import com.haulmont.addon.datagen.entity.str.StringPropGenStrategy.FAKER
+import com.haulmont.addon.datagen.entity.str.StringPropGenStrategy.MANUAL
 import com.haulmont.addon.datagen.service.FakerService
 import com.haulmont.cuba.core.global.AppBeans
 
 object StringGenerator {
 
-    fun generateStringProperty(settings: StringPropertyGenerationSettings): String? =
+    fun generateStringProperty(settings: StringPropGenSettings): String? =
             when (settings.getStrategy()) {
                 MANUAL -> settings.manualValue
                 FAKER -> generateByFaker(settings)
                 null -> null
             }
 
-    private fun generateByFaker(settings: StringPropertyGenerationSettings): String? {
+    private fun generateByFaker(settings: StringPropGenSettings): String? {
         val fakerProvider = settings.fakerProvider
         val fakerProviderFunction = settings.fakerProviderFunction
 

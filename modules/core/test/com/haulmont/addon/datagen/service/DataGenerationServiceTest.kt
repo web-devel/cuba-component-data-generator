@@ -30,7 +30,8 @@ class DataGenerationServiceTest {
 
     @Test
     fun testGeneratedEntityClass() {
-        val settings = EntityGenerationSettings(TestEntityKotlin::class.java)
+        val settings = EntityGenerationSettings<TestEntityKotlin>()
+        settings.entityClass = TestEntityKotlin::class.java
         val generated = dgs.generateEntity(settings)
         assert(TestEntityKotlin::class.java.isAssignableFrom(generated::class.java))
     }

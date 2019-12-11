@@ -2,7 +2,7 @@
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
         <instance id="dc"
-                  class="com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings"/>
+                  class="com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings"/>
     </data>
     <layout>
         <hbox spacing="true">

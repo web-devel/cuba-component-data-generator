@@ -1,8 +1,8 @@
 package com.haulmont.addon.datagen.generation
 
-import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.chile.core.model.MetaProperty
@@ -10,7 +10,7 @@ import com.haulmont.chile.core.model.MetaProperty
 object GenerationSettingsFactory {
 
     private val dType2Settings = mapOf(
-            java.lang.String::class.java to StringPropertyGenerationSettings::class.java,
+            java.lang.String::class.java to StringPropGenSettings::class.java,
             java.lang.Boolean::class.java to BooleanPropertyGenerationSettings::class.java,
             java.lang.Integer::class.java to NumberPropGenSettings::class.java,
             java.lang.Long::class.java to NumberPropGenSettings::class.java,
@@ -46,8 +46,8 @@ object GenerationSettingsFactory {
 }
 
 
-fun stringPropertyGenerationSettings(init: StringPropertyGenerationSettings.() -> Unit): StringPropertyGenerationSettings {
-    val settings = StringPropertyGenerationSettings()
+fun stringPropertyGenerationSettings(init: StringPropGenSettings.() -> Unit): StringPropGenSettings {
+    val settings = StringPropGenSettings()
     settings.init()
     return settings
 }

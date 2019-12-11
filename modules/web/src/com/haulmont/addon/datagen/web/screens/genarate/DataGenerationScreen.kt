@@ -1,8 +1,12 @@
 package com.haulmont.addon.datagen.web.screens.genarate
 
-import com.haulmont.addon.datagen.entity.*
+import com.haulmont.addon.datagen.entity.DataGenerationCommand
+import com.haulmont.addon.datagen.entity.EntityGenerationSettings
+import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
@@ -99,7 +103,8 @@ class DataGenerationScreen : Screen() {
             generationSettingsBox.isVisible = false
             return
         }
-        val entityGenerationSettings = EntityGenerationSettings(metaClass.getJavaClass<Entity<*>>())
+        val entityGenerationSettings = EntityGenerationSettings<Entity<*>>()
+        entityGenerationSettings.entityClass = metaClass.getJavaClass<Entity<*>>()
         generationCommandDc.item.entityGenerationSettings = entityGenerationSettings
         previewBox.isVisible = true
         generationSettingsBox.isVisible = true
@@ -141,7 +146,7 @@ class DataGenerationScreen : Screen() {
             is BooleanPropertyGenerationSettings ->
                 fragments.create(this, BooleanPropertyGenerationSettingsFragment::class.java)
                         .setItem(propSettings)
-            is StringPropertyGenerationSettings ->
+            is StringPropGenSettings ->
                 fragments.create(this, StringPropertyGenerationSettingsFragment::class.java)
                         .setItem(propSettings)
             is NumberPropGenSettings ->

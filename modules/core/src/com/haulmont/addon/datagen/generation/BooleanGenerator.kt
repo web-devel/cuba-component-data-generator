@@ -1,7 +1,7 @@
 package com.haulmont.addon.datagen.generation
 
-import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationStrategy
+import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationStrategy
 import org.apache.commons.lang3.RandomUtils
 
 object BooleanGenerator {

@@ -2,7 +2,7 @@
 <fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
     <data>
         <instance id="dc"
-                  class="com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings"
+                  class="com.haulmont.addon.datagen.entity.str.StringPropGenSettings"
                   view="_local"/>
     </data>
     <layout>
@@ -11,19 +11,19 @@
                          dataContainer="dc"
                          property="strategy"
                          nullOptionVisible="true"
-                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.strategy"/>
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.strategy"/>
             <textField id="manualValueField" dataContainer="dc"
                        property="manualValue"
-                       caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.manualValue"/>
+                       caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.manualValue"/>
             <lookupField id="fakerProviderField"
                          dataContainer="dc"
                          property="fakerProvider"
-                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProvider"
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.fakerProvider"
                          nullOptionVisible="false"/>
             <lookupField id="fakerProviderFunctionField"
                          dataContainer="dc"
                          property="fakerProviderFunction"
-                         caption="msg://com.haulmont.addon.datagen.entity/StringPropertyGenerationSettings.fakerProviderFunction"
+                         caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.fakerProviderFunction"
                          nullOptionVisible="false"/>
         </hbox>
     </layout>

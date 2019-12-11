@@ -1,7 +1,7 @@
 package com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings
 
-import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.BooleanPropertyGenerationStrategy
+import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
+import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationStrategy
 import com.haulmont.addon.datagen.web.screens.props.PropChangeListener
 import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.cuba.gui.components.CheckBox

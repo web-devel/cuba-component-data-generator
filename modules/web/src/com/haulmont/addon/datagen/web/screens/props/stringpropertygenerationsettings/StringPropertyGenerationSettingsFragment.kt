@@ -1,7 +1,7 @@
 package com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings
 
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationSettings
-import com.haulmont.addon.datagen.entity.StringPropertyGenerationStrategy
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
+import com.haulmont.addon.datagen.entity.str.StringPropGenStrategy
 import com.haulmont.addon.datagen.service.FakerService
 import com.haulmont.addon.datagen.web.screens.props.PropChangeListener
 import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
@@ -16,13 +16,13 @@ import javax.inject.Inject
 
 @UiController("datagen_StringPropertyGenerationSettingsFragment")
 @UiDescriptor("string-property-generation-settings-fragment.xml")
-class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropertyGenerationSettings>() {
+class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropGenSettings>() {
 
     @Inject
     private lateinit var fakerService: FakerService
 
     @Inject
-    private lateinit var dc: InstanceContainer<StringPropertyGenerationSettings>
+    private lateinit var dc: InstanceContainer<StringPropGenSettings>
 
     // UI
     @Inject
@@ -33,14 +33,14 @@ class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropertyG
     private lateinit var manualValueField: TextField<String>
 
     @Inject
-    private lateinit var strategyField: LookupField<StringPropertyGenerationStrategy>
+    private lateinit var strategyField: LookupField<StringPropGenStrategy>
 
-    override fun setItem(settings: StringPropertyGenerationSettings): PropGenFragment<StringPropertyGenerationSettings> {
+    override fun setItem(settings: StringPropGenSettings): PropGenFragment<StringPropGenSettings> {
         dc.setItem(settings)
         return this
     }
 
-    override fun addDcPropChangeListener(listener: PropChangeListener<StringPropertyGenerationSettings>) {
+    override fun addDcPropChangeListener(listener: PropChangeListener<StringPropGenSettings>) {
         dc.addItemPropertyChangeListener(listener)
     }
 
@@ -63,15 +63,15 @@ class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropertyG
     }
 
     @Subscribe("strategyField")
-    private fun onStrategyFieldValueChange(event: HasValue.ValueChangeEvent<StringPropertyGenerationStrategy>) {
+    private fun onStrategyFieldValueChange(event: HasValue.ValueChangeEvent<StringPropGenStrategy>) {
         updateVisibleFields()
     }
 
     private fun updateVisibleFields() {
         val strategy = dc.item.getStrategy()
-        manualValueField.isVisible = strategy == StringPropertyGenerationStrategy.MANUAL
-        fakerProviderField.isVisible = strategy == StringPropertyGenerationStrategy.FAKER
-        fakerProviderFunctionField.isVisible = strategy == StringPropertyGenerationStrategy.FAKER
+        manualValueField.isVisible = strategy == StringPropGenStrategy.MANUAL
+        fakerProviderField.isVisible = strategy == StringPropGenStrategy.FAKER
+        fakerProviderFunctionField.isVisible = strategy == StringPropGenStrategy.FAKER
     }
 
 }
