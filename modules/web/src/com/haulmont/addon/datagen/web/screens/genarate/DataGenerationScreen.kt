@@ -31,7 +31,7 @@ import com.haulmont.cuba.gui.screen.Screen
 import com.haulmont.cuba.gui.screen.Subscribe
 import com.haulmont.cuba.gui.screen.UiController
 import com.haulmont.cuba.gui.screen.UiDescriptor
-import com.haulmont.cuba.web.gui.components.WebGroupBox
+import com.haulmont.cuba.web.gui.components.WebVBoxLayout
 import javax.inject.Inject
 
 @Suppress("IncorrectCreateEntity")
@@ -131,9 +131,13 @@ class DataGenerationScreen : Screen() {
         propDC.setItem(settings)
         screenData.registerContainer("${prop.name}Dc", propDC) // todo unregister
 
-        val propertySettingsBox = uiComponents.create<WebGroupBox>(WebGroupBox::class.java)
-        propertySettingsBox.caption = prop.name
-        propertySettingsBox.styleName = "light"
+        val propertySettingsBox = uiComponents.create<WebVBoxLayout>(WebVBoxLayout::class.java)
+        propertySettingsBox.setWidth("100%")
+
+        val propCaption = uiComponents.create(Label.TYPE_STRING)
+        propCaption.value = prop.name
+        propCaption.styleName = "bold"
+        propertySettingsBox.add(propCaption)
 
         val propFragment = createPropFragment(settings)
         propFragment.addDcPropChangeListener { e -> updatePreview() }

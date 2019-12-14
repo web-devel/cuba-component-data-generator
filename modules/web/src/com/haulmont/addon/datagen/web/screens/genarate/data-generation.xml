@@ -10,10 +10,10 @@
             </instance>
         </instance>
     </data>
-    <layout expand="split">
+    <layout expand="split" spacing="true">
         <lookupField id="entityLookup" caption="msg://entityLookup"/>
         <split id="split" orientation="horizontal" pos="60">
-            <scrollBox id="propertiesConfigBox" margin="true">
+            <scrollBox id="propertiesConfigBox" margin="true" spacing="true">
                 <!--Properties are placed here-->
             </scrollBox>
             <vbox id="previewBox" visible="false" margin="true" height="100%" expand="previewTextArea">

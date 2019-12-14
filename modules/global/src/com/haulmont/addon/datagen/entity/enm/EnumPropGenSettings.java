@@ -9,7 +9,7 @@ public class EnumPropGenSettings extends PropertyGenerationSettings {
     private static final long serialVersionUID = 4050643602429340299L;
 
     @MetaProperty
-    protected String strategy;
+    protected String strategy = EnumPropGenStrategy.RANDOM.getId();
 
     protected Enum manualValue;
 

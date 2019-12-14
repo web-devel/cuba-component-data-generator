@@ -9,7 +9,7 @@ public class NumberPropGenSettings extends PropertyGenerationSettings {
     private static final long serialVersionUID = -5151773813209426340L;
 
     @MetaProperty
-    protected String strategy;
+    protected String strategy = NumberPropGenStrategy.RANDOM.getId();
 
     @MetaProperty
     protected Long manualIntegerValue;

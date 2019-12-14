@@ -36,16 +36,22 @@ class EnumPropGenSettingsFragment : PropGenFragment<EnumPropGenSettings>() {
 
     @Subscribe
     private fun onInit(event: InitEvent) {
-        manualValueField.setOptionsList(dc.item.metaProperty.range.asEnumeration().values)
         strategyField.addValueChangeListener {
             updateFields()
+        }
+        manualValueField.setOptionsList(dc.item.metaProperty.range.asEnumeration().values)
+        manualValueField.addValueChangeListener {
+            dc.item.manualValue = it.value
         }
     }
 
     private fun updateFields() {
         when (strategyField.value) {
             EnumPropGenStrategy.MANUAL -> manualValueField.setVisible(true)
-            else -> manualValueField.setVisible(false)
+            else ->  {
+                manualValueField.setVisible(false)
+                manualValueField.value = null
+            }
         }
     }
 
