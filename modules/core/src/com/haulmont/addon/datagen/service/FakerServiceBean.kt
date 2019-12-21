@@ -13,6 +13,7 @@ import kotlin.reflect.jvm.javaField
 @Service(FakerService.NAME)
 class FakerServiceBean : FakerService {
 
+    private val faker = Faker()
     private val providerProps: SortedMap<String, KProperty1<Faker, *>> = scanProviders()
     private var providerFunctionRefs: List<String>? = null
 
@@ -23,7 +24,7 @@ class FakerServiceBean : FakerService {
         }
         val providerNames = this.providerProps.keys.toList()
         val generatedRefs: List<String> = providerNames.map { pName ->
-            return getProviderFunctionsNameList(pName).map { funName ->
+            getProviderFunctionsNameList(pName).map { funName ->
                  pName + StringPropGenSettings.DELIMITER + funName
             }
         }.flatten()
@@ -49,7 +50,7 @@ class FakerServiceBean : FakerService {
     private fun getProviderFunctionsNameList(providerName: String): List<String> {
         val prop = providerProps[providerName]
         requireNotNull(prop)
-        val provider = prop.get(Faker())
+        val provider = prop.get(faker)
         requireNotNull(provider)
         return provider::class.declaredMemberFunctions
                 .filter { it.parameters.size == 1 } // 1st parameter is instance
