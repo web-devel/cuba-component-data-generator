@@ -14,16 +14,21 @@ import kotlin.reflect.jvm.javaField
 class FakerServiceBean : FakerService {
 
     private val providerProps: SortedMap<String, KProperty1<Faker, *>> = scanProviders()
+    private var providerFunctionRefs: List<String>? = null
 
     override fun getProviderFunctionRefs(): List<String> {
-        val providerNames = this.providerProps.keys.toList()
-        val funRefs = mutableListOf<String>()
-        providerNames.forEach { providerName ->
-            getProviderFunctionsNameList(providerName).forEach { funName ->
-                funRefs.add(providerName + StringPropGenSettings.DELIMITER + funName)
-            }
+        val cachedRefs = providerFunctionRefs
+        if (cachedRefs != null) {
+            return cachedRefs
         }
-        return funRefs
+        val providerNames = this.providerProps.keys.toList()
+        val generatedRefs: List<String> = providerNames.map { pName ->
+            return getProviderFunctionsNameList(pName).map { funName ->
+                 pName + StringPropGenSettings.DELIMITER + funName
+            }
+        }.flatten()
+        providerFunctionRefs = generatedRefs
+        return generatedRefs
     }
 
     override fun generate(providerFunctionRef: String): String {

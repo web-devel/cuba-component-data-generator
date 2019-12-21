@@ -16,7 +16,6 @@ object StringGenerator {
             }
 
     private fun generateByFaker(settings: StringPropGenSettings): String? {
-
         return if (settings.fakerFunctionRef == null) {
             null
         } else {
