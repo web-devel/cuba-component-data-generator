@@ -7,6 +7,7 @@ import com.haulmont.chile.core.annotations.MetaProperty;
 @MetaClass(name = "datagen_StringPropertyGenerationSettings")
 public class StringPropGenSettings extends PropertyGenerationSettings {
     private static final long serialVersionUID = 5115061741685345563L;
+    public static final String DELIMITER = "::";
 
     @MetaProperty
     protected String manualValue;
@@ -15,25 +16,15 @@ public class StringPropGenSettings extends PropertyGenerationSettings {
     protected String strategy = StringPropGenStrategy.FAKER.getId();
 
     @MetaProperty
-    protected String fakerProvider;
+    protected String fakerFunctionRef;
 
-    @MetaProperty
-    protected String fakerProviderFunction;
 
-    public String getFakerProviderFunction() {
-        return fakerProviderFunction;
+    public String getFakerFunctionRef() {
+        return fakerFunctionRef;
     }
 
-    public void setFakerProviderFunction(String fakerProviderFunction) {
-        this.fakerProviderFunction = fakerProviderFunction;
-    }
-
-    public String getFakerProvider() {
-        return fakerProvider;
-    }
-
-    public void setFakerProvider(String fakerProvider) {
-        this.fakerProvider = fakerProvider;
+    public void setFakerFunctionRef(String fakerFunctionRef) {
+        this.fakerFunctionRef = fakerFunctionRef;
     }
 
     public StringPropGenStrategy getStrategy() {

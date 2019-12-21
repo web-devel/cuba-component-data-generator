@@ -28,8 +28,6 @@ class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropGenSe
     @Inject
     private lateinit var fakerProviderField: LookupField<String>
     @Inject
-    private lateinit var fakerProviderFunctionField: LookupField<String>
-    @Inject
     private lateinit var manualValueField: TextField<String>
 
     @Inject
@@ -47,19 +45,8 @@ class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropGenSe
     @Subscribe
     private fun onInit(event: InitEvent) {
         updateVisibleFields()
-        val fakerProviders = fakerService.getProviderNamesList()
+        val fakerProviders = fakerService.getProviderFunctionRefs()
         fakerProviderField.setOptionsList(fakerProviders)
-        fakerProviderField.addValueChangeListener() { changeEvent ->
-            if (changeEvent.value == null) {
-                fakerProviderFunctionField.setOptionsList(emptyList())
-                fakerProviderFunctionField.value = null
-            } else {
-                val funNames = fakerService.getProviderFunctionsNameList(changeEvent.value!!)
-                fakerProviderFunctionField.setOptionsList(funNames)
-                fakerProviderFunctionField.value = funNames.firstOrNull()
-            }
-        }
-        fakerProviderField.value = fakerProviders.firstOrNull()
     }
 
     @Subscribe("strategyField")
@@ -71,7 +58,6 @@ class StringPropertyGenerationSettingsFragment : PropGenFragment<StringPropGenSe
         val strategy = dc.item.getStrategy()
         manualValueField.isVisible = strategy == StringPropGenStrategy.MANUAL
         fakerProviderField.isVisible = strategy == StringPropGenStrategy.FAKER
-        fakerProviderFunctionField.isVisible = strategy == StringPropGenStrategy.FAKER
     }
 
 }

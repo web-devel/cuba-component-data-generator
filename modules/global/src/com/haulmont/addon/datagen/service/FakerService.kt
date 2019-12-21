@@ -5,9 +5,7 @@ interface FakerService {
         const val NAME = "datagen_FakerService"
     }
 
-    fun getProviderNamesList(): List<String>
+    fun getProviderFunctionRefs(): List<String>
 
-    fun getProviderFunctionsNameList(providerName: String): List<String>
-
-    fun generate(providerName: String, funName: String): String
+    fun generate(providerFunctionRef: String): String
 }

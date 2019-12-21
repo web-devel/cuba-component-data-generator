@@ -1,10 +1,11 @@
 package com.haulmont.addon.datagen.service
 
 import com.haulmont.addon.datagen.DatagenTestContainer
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.cuba.core.global.AppBeans
 import io.github.serpro69.kfaker.Faker
-import io.github.serpro69.kfaker.provider.Address
 import io.github.serpro69.kfaker.provider.Ancient
+import io.github.serpro69.kfaker.provider.Beer
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
@@ -27,31 +28,17 @@ class FakerServiceTest {
 
     @Test
     fun testProvidersList() {
-        val providers = fakerService.getProviderNamesList()
+        val providers = fakerService.getProviderFunctionRefs()
         val someExistingProviders = listOf(
-                Faker::ancient.name,
-                Faker::beer.name
+                Faker::ancient.name + StringPropGenSettings.DELIMITER + Ancient::god.name,
+                Faker::beer.name + StringPropGenSettings.DELIMITER + Beer::name.name
         )
         assert(providers.containsAll(someExistingProviders))
     }
 
     @Test
-    fun testProviderFunList() {
-        val foundFuns = fakerService.getProviderFunctionsNameList(Faker::ancient.name)
-        val existingFuns = listOf(
-                Ancient::god.name,
-                Ancient::primordial.name,
-                Ancient::titan.name,
-                Ancient::hero.name
-        )
-        existingFuns.forEach {
-            assert(foundFuns.contains(it))
-        }
-    }
-
-    @Test
     fun testGenerate() {
-        val generationResult = fakerService.generate(Faker::address.name, Address::city.name)
+        val generationResult = fakerService.generate(Faker::ancient.name + StringPropGenSettings.DELIMITER + Ancient::god.name)
         assert(generationResult.isNotBlank())
     }
 }

@@ -17,13 +17,8 @@
                        caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.manualValue"/>
             <lookupField id="fakerProviderField"
                          dataContainer="dc"
-                         property="fakerProvider"
+                         property="fakerFunctionRef"
                          caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.fakerProvider"
-                         nullOptionVisible="false"/>
-            <lookupField id="fakerProviderFunctionField"
-                         dataContainer="dc"
-                         property="fakerProviderFunction"
-                         caption="msg://com.haulmont.addon.datagen.entity/StringPropGenSettings.fakerProviderFunction"
                          nullOptionVisible="false"/>
         </hbox>
     </layout>

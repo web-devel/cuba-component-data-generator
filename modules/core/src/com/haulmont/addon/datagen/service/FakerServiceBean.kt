@@ -1,5 +1,6 @@
-package com.haulmont.addon.datagen.service;
+package com.haulmont.addon.datagen.service
 
+import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import io.github.serpro69.kfaker.Faker
 import io.github.serpro69.kfaker.provider.AbstractFakeDataProvider
 import org.springframework.stereotype.Service
@@ -14,20 +15,23 @@ class FakerServiceBean : FakerService {
 
     private val providerProps: SortedMap<String, KProperty1<Faker, *>> = scanProviders()
 
-    override fun getProviderNamesList(): List<String> {
-        return this.providerProps.keys.toList()
+    override fun getProviderFunctionRefs(): List<String> {
+        val providerNames = this.providerProps.keys.toList()
+        val funRefs = mutableListOf<String>()
+        providerNames.forEach { providerName ->
+            getProviderFunctionsNameList(providerName).forEach { funName ->
+                funRefs.add(providerName + StringPropGenSettings.DELIMITER + funName)
+            }
+        }
+        return funRefs
     }
 
-    override fun getProviderFunctionsNameList(providerName: String): List<String> {
-        val prop = providerProps[providerName]
-        requireNotNull(prop)
-        val get = prop.get(Faker())
-        requireNotNull(get)
-        return get::class.declaredMemberFunctions.map { it.name }
-    }
-
-    override fun generate(providerName: String, funName: String): String {
+    override fun generate(providerFunctionRef: String): String {
         val faker = Faker()
+        val parts = providerFunctionRef.split(StringPropGenSettings.DELIMITER)
+        assert(parts.size == 2)
+        val providerName = parts[0]
+        val funName = parts[1]
         val prop = providerProps[providerName]
         val provider = ((prop as KProperty1<Faker, AbstractFakeDataProvider<*>>).get(faker))
         val func = provider::class.declaredMemberFunctions.find { f ->
@@ -35,6 +39,16 @@ class FakerServiceBean : FakerService {
         }
         requireNotNull(func)
         return func.call(provider) as String
+    }
+
+    private fun getProviderFunctionsNameList(providerName: String): List<String> {
+        val prop = providerProps[providerName]
+        requireNotNull(prop)
+        val provider = prop.get(Faker())
+        requireNotNull(provider)
+        return provider::class.declaredMemberFunctions
+                .filter { it.parameters.size == 1 } // 1st parameter is instance
+                .map { it.name }
     }
 
     private fun scanProviders(): SortedMap<String, KProperty1<Faker, *>> {
