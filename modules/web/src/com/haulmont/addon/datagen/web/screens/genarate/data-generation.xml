@@ -25,14 +25,31 @@
                 <textArea id="previewTextArea" width="100%"/>
             </vbox>
         </split>
-        <groupBox id="generationSettingsBox" visible="false">
-            <hbox>
-                <form dataContainer="generationCommandDc">
-                    <field property="saveExecutionLog"/>
-                </form>
+        <groupBox id="generationSettingsBox" visible="false"
+                  caption="msg://generationSettings">
+            <hbox width="100%" expand="spacerBox" spacing="true">
+                <hbox spacing="true">
+                    <label value="msg://com.haulmont.addon.datagen.entity/DataGenerationCommand.type"
+                           align="MIDDLE_LEFT"/>
+                    <lookupField dataContainer="generationCommandDc"
+                                 property="type"/>
+                </hbox>
+                <hbox spacing="true">
+                    <label value="msg://com.haulmont.addon.datagen.entity/DataGenerationCommand.amount"
+                           align="MIDDLE_LEFT"/>
+                    <textField dataContainer="generationCommandDc"
+                               property="amount"/>
+                </hbox>
+                <checkBox dataContainer="generationCommandDc"
+                          property="saveExecutionLog"
+                          caption="msg://com.haulmont.addon.datagen.entity/DataGenerationCommand.saveExecutionLog"
+                          align="MIDDLE_LEFT"/>
+                <hbox id="spacerBox"/>
                 <button id="generateBtn"
+                        width="200px"
                         caption="msg://generate"
                         stylename="friendly"
+                        align="MIDDLE_RIGHT"
                         icon="font-icon:GEAR"/>
             </hbox>
         </groupBox>

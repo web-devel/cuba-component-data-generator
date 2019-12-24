@@ -20,6 +20,7 @@ import com.haulmont.cuba.core.app.serialization.EntitySerializationAPI
 import com.haulmont.cuba.core.app.serialization.EntitySerializationOption
 import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.Metadata
+import com.haulmont.cuba.core.global.MetadataTools
 import com.haulmont.cuba.gui.Fragments
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
@@ -50,6 +51,8 @@ class DataGenerationScreen : Screen() {
     private lateinit var fragments: Fragments
     @Inject
     private lateinit var dataGenerationService: DataGenerationService
+    @Inject
+    private lateinit var metadataTools: MetadataTools
     @Inject
     private lateinit var entitySerializationAPI: EntitySerializationAPI
 
@@ -89,9 +92,15 @@ class DataGenerationScreen : Screen() {
     }
 
     private fun updateEntitySelectLookup() {
-        val metaClasses = metadata.tools.allPersistentMetaClasses
+        val nonSystemMetaClasses = metadataTools.allPersistentMetaClasses
+                .filter { !metadataTools.isSystemLevel(it) }
                 .sortedBy { it.name }
-        entityLookup.options = ListOptions(metaClasses)
+
+        val systemMetaClasses = metadataTools.allPersistentMetaClasses
+                .filter { metadataTools.isSystemLevel(it) }
+                .sortedBy { it.name }
+
+        entityLookup.options = ListOptions(nonSystemMetaClasses + systemMetaClasses)
         entityLookup.addValueChangeListener { handleMetaClassSelection(it.value) }
     }
 
