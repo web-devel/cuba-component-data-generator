@@ -132,6 +132,22 @@ configure(coreModule) {
         dbUser = 'cuba'
         dbPassword = 'cuba'
     }
+
+    task createTestDb(dependsOn: assembleDbScripts, description: 'Creates test database', type: CubaDbCreation) {
+        dbms = 'postgres'
+        host = "localhost"
+        dbName = 'datagen_test'
+        dbUser = 'cuba'
+        dbPassword = 'cuba'
+        auxiliaryScript = file('test/com/haulmont/addon/datagen/create-test-db.sql')
+    }
+
+    entitiesEnhancing {
+        test {
+            enabled = true
+        }
+    }
+
 }
 
 configure(webModule) {

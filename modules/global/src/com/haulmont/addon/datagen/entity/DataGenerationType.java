@@ -7,7 +7,8 @@ import javax.annotation.Nullable;
 
 public enum DataGenerationType implements EnumClass<String> {
 
-    COMMIT("COMMIT"),
+    COMMIT_SEPARATELY("COMMIT_SEPARATELY"),
+    COMMIT_IN_SINGLE_TRANSACTION("COMMIT_IN_SINGLE_TRANSACTION"),
     JSON("JSON");
 
     private String id;

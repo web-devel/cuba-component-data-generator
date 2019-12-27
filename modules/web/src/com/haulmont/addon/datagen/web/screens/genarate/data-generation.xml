@@ -40,10 +40,6 @@
                     <textField dataContainer="generationCommandDc"
                                property="amount"/>
                 </hbox>
-                <checkBox dataContainer="generationCommandDc"
-                          property="saveExecutionLog"
-                          caption="msg://com.haulmont.addon.datagen.entity/DataGenerationCommand.saveExecutionLog"
-                          align="MIDDLE_LEFT"/>
                 <hbox id="spacerBox"/>
                 <button id="generateBtn"
                         width="200px"

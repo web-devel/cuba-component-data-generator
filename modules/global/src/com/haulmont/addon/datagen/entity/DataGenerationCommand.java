@@ -10,10 +10,7 @@ public class DataGenerationCommand<T extends Entity<?>> extends BaseUuidEntity {
     private static final long serialVersionUID = -8098657610737920471L;
 
     @MetaProperty
-    protected Boolean saveExecutionLog = true;
-
-    @MetaProperty
-    protected String type = DataGenerationType.COMMIT.getId();
+    protected String type = DataGenerationType.COMMIT_SEPARATELY.getId();
 
     @MetaProperty
     protected Integer amount = 1;
@@ -45,11 +42,4 @@ public class DataGenerationCommand<T extends Entity<?>> extends BaseUuidEntity {
         return entityGenerationSettings;
     }
 
-    public Boolean getSaveExecutionLog() {
-        return saveExecutionLog;
-    }
-
-    public void setSaveExecutionLog(Boolean saveExecutionLog) {
-        this.saveExecutionLog = saveExecutionLog;
-    }
 }

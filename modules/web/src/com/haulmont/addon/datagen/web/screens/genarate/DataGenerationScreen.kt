@@ -9,6 +9,7 @@ import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.addon.datagen.service.DataGenerationService
+import com.haulmont.addon.datagen.web.screens.generationresult.GenerationResultScreen
 import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.enumpropgensettings.EnumPropGenSettingsFragment
@@ -22,16 +23,14 @@ import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.core.global.MetadataTools
 import com.haulmont.cuba.gui.Fragments
+import com.haulmont.cuba.gui.ScreenBuilders
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
 import com.haulmont.cuba.gui.components.data.options.ListOptions
 import com.haulmont.cuba.gui.model.CollectionPropertyContainer
 import com.haulmont.cuba.gui.model.DataComponents
 import com.haulmont.cuba.gui.model.InstanceContainer
-import com.haulmont.cuba.gui.screen.Screen
-import com.haulmont.cuba.gui.screen.Subscribe
-import com.haulmont.cuba.gui.screen.UiController
-import com.haulmont.cuba.gui.screen.UiDescriptor
+import com.haulmont.cuba.gui.screen.*
 import com.haulmont.cuba.web.gui.components.WebVBoxLayout
 import javax.inject.Inject
 
@@ -73,6 +72,8 @@ class DataGenerationScreen : Screen() {
     private lateinit var generationSettingsBox: GroupBoxLayout
     @Inject
     private lateinit var previewBox: VBoxLayout
+    @Inject
+    private lateinit var screenBuilders: ScreenBuilders
 
     @Subscribe
     private fun onInit(event: InitEvent) {
@@ -82,7 +83,13 @@ class DataGenerationScreen : Screen() {
 
     @Subscribe("generateBtn")
     private fun onGenerateBtnClick(event: Button.ClickEvent) {
-        dataGenerationService.generateEntities(this.generationCommandDc.item)
+        val resultScreen: GenerationResultScreen = screenBuilders.screen(this)
+                .withScreenClass(GenerationResultScreen::class.java)
+                .withLaunchMode(OpenMode.DIALOG)
+                .build()
+
+        resultScreen.command = this.generationCommandDc.item
+        resultScreen.show()
     }
 
 

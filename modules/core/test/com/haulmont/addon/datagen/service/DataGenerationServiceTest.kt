@@ -1,10 +1,10 @@
 package com.haulmont.addon.datagen.service
 
 import com.haulmont.addon.datagen.DatagenTestContainer
-import com.haulmont.addon.datagen.entity.EntityGenerationSettings
-import com.haulmont.addon.datagen.entity.TestEntityKotlin
+import com.haulmont.addon.datagen.entity.*
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
+import com.haulmont.cuba.security.entity.Permission
 import org.junit.After
 import org.junit.Before
 import org.junit.ClassRule
@@ -30,10 +30,34 @@ class DataGenerationServiceTest {
 
     @Test
     fun testGeneratedEntityClass() {
-        val settings = EntityGenerationSettings<TestEntityKotlin>()
-        settings.entityClass = TestEntityKotlin::class.java
+        val settings = EntityGenerationSettings<TestEntityJava>()
+        settings.entityClass = TestEntityJava::class.java
         val generated = dgs.generateEntity(settings)
-        assert(TestEntityKotlin::class.java.isAssignableFrom(generated::class.java))
+        assert(TestEntityJava::class.java.isAssignableFrom(generated::class.java))
+    }
+
+    @Test
+    fun testAmount() {
+        val command = DataGenerationCommand<TestEntityJava>()
+        command.amount = 3
+        command.entityGenerationSettings = EntityGenerationSettings()
+        command.entityGenerationSettings.entityClass = TestEntityJava::class.java
+        command.type = DataGenerationType.JSON
+        val res = dgs.generateEntities(command)
+        assert(res.generated.size == 3)
+        assert(res.committed.size == 0)
+    }
+
+    @Test
+    fun testCommitSeparately() {
+        val command = DataGenerationCommand<Permission>()
+        command.amount = 3
+        command.entityGenerationSettings = EntityGenerationSettings()
+        command.entityGenerationSettings.entityClass = Permission::class.java
+        command.type = DataGenerationType.COMMIT_SEPARATELY
+        val res = dgs.generateEntities(command)
+        assert(res.exceptions.size == 3) // todo
+        assert(res.generated.size == 3)
     }
 
 //    @Test
