@@ -18,6 +18,7 @@ buildscript {
     dependencies {
         classpath "com.haulmont.gradle:cuba-plugin:$cubaVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.4"
     }
 }
 
@@ -34,11 +35,50 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.haulmont.addon.datagen'
-        version = '0.1'
+        version = '0.2'
         isSnapshot = true
     }
     tomcat {
         dir = "$project.rootDir/deploy/tomcat"
+    }
+}
+
+subprojects {
+    apply plugin: 'com.jfrog.bintray'
+
+    bintray {
+        user = System.getenv('BINTRAY_WD_USERNAME')
+        key = System.getenv('BINTRAY_WD_KEY')
+
+        configurations = ['archives']
+
+        publish = true
+
+        override = false
+
+        // metadata
+        pkg {
+            repo = 'maven'
+            name = 'cuba-component-data-generator'
+            desc = 'CUBA component for generating sample data'
+
+            websiteUrl = 'https://github.com/web-devel/cuba-component-data-generator'
+            issueTrackerUrl = 'https://github.com/web-devel/cuba-component-data-generator/issues'
+            vcsUrl = 'https://github.com/web-devel/cuba-component-data-generator.git'
+
+            licenses = ["Apache-2.0"]
+
+            labels = ['cuba-patform', 'cuba-component']
+            githubRepo = 'web-devel/cuba-component-data-generator'
+//            githubReleaseNotesFile = 'CHANGELOG.md'
+
+            version {
+                name = "${cuba.artifact.version}"
+                desc = ''
+                released = new Date()
+                vcsTag = "${cuba.artifact.version}"
+            }
+        }
     }
 }
 
