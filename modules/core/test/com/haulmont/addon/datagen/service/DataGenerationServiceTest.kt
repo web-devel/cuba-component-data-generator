@@ -2,6 +2,7 @@ package com.haulmont.addon.datagen.service
 
 import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.*
+import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.cuba.core.global.AppBeans
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.entity.Permission
@@ -14,7 +15,8 @@ import org.junit.Test
 class DataGenerationServiceTest {
 
     companion object {
-        @ClassRule @JvmField
+        @ClassRule
+        @JvmField
         var cont: DatagenTestContainer = DatagenTestContainer.Common.INSTANCE
     }
 
@@ -56,25 +58,20 @@ class DataGenerationServiceTest {
         command.entityGenerationSettings.entityClass = Permission::class.java
         command.type = DataGenerationType.COMMIT_SEPARATELY
         val res = dgs.generateEntities(command)
-        assert(res.exceptions.size == 3) // todo
+        assert(res.committed.size == 3)
         assert(res.generated.size == 3)
     }
 
-//    @Test
-//    fun testEntityWithAllSupportedPropertiesGenerated() {
-//        val settings = EntityGenerationSettings(TestEntity::class.java)
-//        val metaClass = metadata.getClass(TestEntity::class.java)
-//        val generated = dgs.generateEntity(settings)
-//        TestEntity::class.declaredMemberProperties.forEach {kProp ->
-//
-//            val metaProp = metaClass!!.getProperty(kProp.name) ?: return
-//
-//            if (!PropertyGeneration.isGeneratorAvailable(metaProp)) return
-//
-//            val generatedProp = kProp.get(generated)
-//            assert(generatedProp != null)
-//        }
-//    }
+    @Test
+    fun testEntityWithAllSupportedPropertiesGenerated() {
+        val settings = EntityGenerationSettings<TestEntityJava>()
+        settings.entityClass = TestEntityJava::class.java
+        val generatedEntity = dgs.generateEntity(settings)
+        metadata.getClassNN(TestEntityJava::class.java).properties.forEach() { prop ->
+            if (!GenerationSettingsFactory.isGeneratorAvailable(prop)) return
+            assert(generatedEntity.getValue<Any>(prop.name) != null)
+        }
+    }
 
     @After
     @Throws(Exception::class)

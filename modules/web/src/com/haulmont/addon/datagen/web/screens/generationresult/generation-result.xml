@@ -2,7 +2,24 @@
 <window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
         caption="msg://caption"
         messagesPack="com.haulmont.addon.datagen.web.screens.generationresult">
+    <data>
+        <collection id="committedEntitiesDc" class="com.haulmont.cuba.core.entity.BaseGenericIdEntity"/>
+    </data>
     <layout>
-        <progressBar id="progressBar" indeterminate="true" width="200px"/>
+        <progressBar id="progressBar" indeterminate="true" width="100%"/>
+        <accordion id="accordion" visible="false">
+            <tab id="committedTab" expand="committedTable">
+                <table id="committedTable" dataContainer="committedEntitiesDc" width="100%">
+                    <columns>
+                        <column id="id" caption="msg://idColumn"/>
+                        <column id="instanceName" caption="msg://instanceNameColumn"/>
+                    </columns>
+                    <rows />
+                </table>
+            </tab>
+            <tab id="exceptionsTab">
+                <textArea id="exceptionsTextArea" width="100%" height="100%"/>
+            </tab>
+        </accordion>
     </layout>
 </window>

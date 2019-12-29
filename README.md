@@ -2,7 +2,7 @@
 
 # CUBA Component - Data Generator
 
-Application component which lets you generate fake data (works for persistent entities).
+Application component which lets you generate sample data (persistent entities).
 May be useful for demo and test projects as well as for real projects when it's not possible to retrieve a dump.
 
 ## Installation
@@ -17,6 +17,10 @@ https://doc.cuba-platform.com/studio/#add_ons
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
 | 7.1.x            | 0.1.x          |
+
+### Usage
+
+In main menu open Administration -> Data Generation -> Generate Entities.
 
 ### Dependencies
 

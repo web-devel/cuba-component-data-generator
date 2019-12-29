@@ -19,9 +19,9 @@ class DataGenerationServiceBean : DataGenerationService {
     @Inject
     private lateinit var dataManager: DataManager
 
-    override fun <T : Entity<*>> generateEntities(command: DataGenerationCommand<T>): GenerationResult<T> {
+    override fun <T : Entity<*>> generateEntities(command: DataGenerationCommand<T>): EntitiesGenerationResult<T> {
         val generatedEntities = generate(command)
-        val result = GenerationResult(generatedEntities)
+        val result = EntitiesGenerationResult(generatedEntities)
         if (command.type == DataGenerationType.JSON) {
             return result
         }
@@ -50,7 +50,7 @@ class DataGenerationServiceBean : DataGenerationService {
             }
         }
 
-        return GenerationResult(listOf())
+        return EntitiesGenerationResult(listOf())
     }
 
     override fun <T : Entity<*>> generateEntity(settings: EntityGenerationSettings<T>): T {

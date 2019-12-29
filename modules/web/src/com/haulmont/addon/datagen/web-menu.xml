@@ -2,6 +2,5 @@
 <menu-config xmlns="http://schemas.haulmont.com/cuba/menu.xsd">
     <menu id="datagen" insertAfter="entityInspector.browse">
         <item screen="datagen_Generation"/>
-        <item screen="datagen_GenerationResult"/>
     </menu>
 </menu-config>
