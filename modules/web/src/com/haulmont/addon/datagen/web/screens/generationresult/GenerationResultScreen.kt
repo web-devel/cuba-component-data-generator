@@ -9,10 +9,15 @@ import com.haulmont.cuba.core.global.MetadataTools
 import com.haulmont.cuba.gui.ScreenBuilders
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
+import com.haulmont.cuba.gui.executors.BackgroundTask
+import com.haulmont.cuba.gui.executors.BackgroundTaskHandler
+import com.haulmont.cuba.gui.executors.BackgroundWorker
+import com.haulmont.cuba.gui.executors.TaskLifeCycle
 import com.haulmont.cuba.gui.model.CollectionContainer
 import com.haulmont.cuba.gui.screen.*
 import org.apache.commons.lang3.exception.ExceptionUtils
 import javax.inject.Inject
+
 
 @UiController("datagen_GenerationResult")
 @UiDescriptor("generation-result.xml")
@@ -42,6 +47,8 @@ class GenerationResultScreen : Screen() {
     private lateinit var accordion: Accordion
     @Inject
     private lateinit var exceptionsTextArea: TextArea<String>
+    @Inject
+    private lateinit var backgroundWorker: BackgroundWorker
 
 
     @Subscribe
@@ -51,14 +58,33 @@ class GenerationResultScreen : Screen() {
     }
 
     private fun doGenerate(cmd: DataGenerationCommand<*>) {
-        val result = dataGenerationService.generateEntities(cmd)
-        progressBar.isVisible = false
-        accordion.isVisible = true
-        window.expand(accordion)
-        showResult(result)
+        progressBar.isVisible = true
+        accordion.isVisible = false
+        val task = object : BackgroundTask<Int?, EntitiesGenerationResult<*>>(600, this) {
+            @Throws(Exception::class)
+            override fun run(taskLifeCycle: TaskLifeCycle<Int?>): EntitiesGenerationResult<*> {
+                return dataGenerationService.generateEntities(cmd)
+            }
+
+            override fun canceled() { // Do something in UI thread if the task is canceled
+            }
+
+            override fun done(result: EntitiesGenerationResult<*>) {
+                showResult(result);
+            }
+
+            override fun progress(changes: List<Int?>) { // Show current progress in UI thread
+            }
+        }
+        val taskHandler: BackgroundTaskHandler<*> = backgroundWorker.handle(task)
+        taskHandler.execute()
     }
 
     private fun showResult(res: EntitiesGenerationResult<*>) {
+        progressBar.isVisible = false
+        accordion.isVisible = true
+        window.expand(accordion)
+
         accordion.getTab("committedTab").caption =
                 messages.formatMessage(javaClass,"committedCaption", res.committed.size)
         val exceptionsTab = accordion.getTab("exceptionsTab")

@@ -10,7 +10,7 @@ public class DataGenerationCommand<T extends Entity<?>> extends BaseUuidEntity {
     private static final long serialVersionUID = -8098657610737920471L;
 
     @MetaProperty
-    protected String type = DataGenerationType.COMMIT_SEPARATELY.getId();
+    protected String type = DataGenerationType.COMMIT_IN_SINGLE_TRANSACTION.getId();
 
     @MetaProperty
     protected Integer amount = 1;
