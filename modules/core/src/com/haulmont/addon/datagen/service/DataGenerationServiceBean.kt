@@ -48,6 +48,7 @@ class DataGenerationServiceBean : DataGenerationService {
             } catch (e: Exception) {
                 result.exceptions.add(e)
             }
+            return (result)
         }
 
         return EntitiesGenerationResult(listOf())

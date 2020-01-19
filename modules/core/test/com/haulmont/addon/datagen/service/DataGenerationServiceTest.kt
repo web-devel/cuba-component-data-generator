@@ -39,13 +39,15 @@ class DataGenerationServiceTest {
     }
 
     @Test
-    fun testAmount() {
+    fun testJSON() {
         val command = DataGenerationCommand<TestEntityJava>()
         command.amount = 3
         command.entityGenerationSettings = EntityGenerationSettings()
         command.entityGenerationSettings.entityClass = TestEntityJava::class.java
         command.type = DataGenerationType.JSON
+
         val res = dgs.generateEntities(command)
+
         assert(res.generated.size == 3)
         assert(res.committed.size == 0)
     }
@@ -57,9 +59,25 @@ class DataGenerationServiceTest {
         command.entityGenerationSettings = EntityGenerationSettings()
         command.entityGenerationSettings.entityClass = Permission::class.java
         command.type = DataGenerationType.COMMIT_SEPARATELY
+
         val res = dgs.generateEntities(command)
+
         assert(res.committed.size == 3)
         assert(res.generated.size == 3)
+    }
+
+    @Test
+    fun testCommitSingleTransaction() {
+        val command = DataGenerationCommand<Permission>()
+        command.amount = 2
+        command.entityGenerationSettings = EntityGenerationSettings()
+        command.entityGenerationSettings.entityClass = Permission::class.java
+        command.type = DataGenerationType.COMMIT_IN_SINGLE_TRANSACTION
+
+        val res = dgs.generateEntities(command)
+
+        assert(res.committed.size == 2)
+        assert(res.generated.size == 2)
     }
 
     @Test
