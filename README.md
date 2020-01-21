@@ -27,7 +27,8 @@ May be useful for demo and test projects as well as for real projects when it's 
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
-| 7.1.x            | 0.1.x          |
+| 7.2.x            | 0.2.x          |
+| 7.1.x            | 0.1.x - 0.2.x  |
 
 ## Usage
 
