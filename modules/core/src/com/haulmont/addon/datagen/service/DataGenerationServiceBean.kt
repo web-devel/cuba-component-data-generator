@@ -55,11 +55,12 @@ class DataGenerationServiceBean : DataGenerationService {
     }
 
     override fun <T : Entity<*>> generateEntity(settings: EntityGenerationSettings<T>): T {
-        val entity: Entity<*> = metadata.create(settings.entityClass)
+        val metaClass = metadata.session.getClass(settings.entityClass)
+        val entity = metadata.create(metaClass) as T // 7.1 / 7.2 compatibility
         settings.properties.forEach {
             entity.setValue(it.metaProperty.name, generateProperty(it))
         }
-        return entity as T // 7.1 / 7.2 compatibility
+        return entity
     }
 
     private fun <T : Entity<*>> generate(command: DataGenerationCommand<T>): List<T> {
