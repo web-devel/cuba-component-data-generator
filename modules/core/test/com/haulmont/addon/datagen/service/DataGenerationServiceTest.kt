@@ -4,6 +4,7 @@ import com.haulmont.addon.datagen.DatagenTestContainer
 import com.haulmont.addon.datagen.entity.*
 import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.cuba.core.global.AppBeans
+import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata
 import com.haulmont.cuba.security.entity.Permission
 import org.junit.After
@@ -22,12 +23,14 @@ class DataGenerationServiceTest {
 
     lateinit var dgs: DataGenerationService
     lateinit var metadata: Metadata
+    lateinit var dataManager: DataManager
 
     @Before
     @Throws(Exception::class)
     fun setUp() {
         dgs = AppBeans.get(DataGenerationService::class.java)
         metadata = AppBeans.get(Metadata::class.java)
+        dataManager = AppBeans.get(DataManager::class.java)
     }
 
     @Test
@@ -89,6 +92,30 @@ class DataGenerationServiceTest {
             if (!GenerationSettingsFactory.isGeneratorAvailable(prop)) return
             assert(generatedEntity.getValue<Any>(prop.name) != null)
         }
+    }
+
+    @Test
+    fun savesLogs() {
+        val command = DataGenerationCommand<Permission>()
+        command.amount = 2
+        command.entityGenerationSettings = EntityGenerationSettings()
+        command.entityGenerationSettings.entityClass = Permission::class.java
+        command.type = DataGenerationType.COMMIT_IN_SINGLE_TRANSACTION
+
+        val res = dgs.generateEntities(command)
+        val ids: List<String> = res.committed.map { it.id.toString() }
+        val ge = dataManager.load(GeneratedEntity::class.java)
+                .query("""
+                    select ge from datagen_GeneratedEntity ge 
+                    where
+                        ge.entityName = :entityName
+                        and ge.instanceId in :instanceIds
+                """)
+                .parameter("entityName", "sec\$Permission")
+                .parameter("instanceIds", ids)
+                .list()
+
+        assert(ge.size == 2)
     }
 
     @After

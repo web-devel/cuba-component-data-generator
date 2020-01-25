@@ -1,4 +1,3 @@
--- begin DATAGEN_GENERATED_ENTITY
 create table DATAGEN_GENERATED_ENTITY (
     ID uuid,
     CREATE_TS timestamp,
@@ -9,5 +8,4 @@ create table DATAGEN_GENERATED_ENTITY (
     INST_NAME text,
     --
     primary key (ID)
-)^
--- end DATAGEN_GENERATED_ENTITY
+);

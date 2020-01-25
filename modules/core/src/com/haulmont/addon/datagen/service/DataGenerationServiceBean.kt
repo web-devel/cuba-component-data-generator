@@ -3,12 +3,14 @@ package com.haulmont.addon.datagen.service
 import com.haulmont.addon.datagen.entity.DataGenerationCommand
 import com.haulmont.addon.datagen.entity.DataGenerationType
 import com.haulmont.addon.datagen.entity.EntityGenerationSettings
+import com.haulmont.addon.datagen.entity.GeneratedEntity
 import com.haulmont.addon.datagen.generation.PropertyGeneration.generateProperty
 import com.haulmont.cuba.core.entity.Entity
 import com.haulmont.cuba.core.global.CommitContext
 import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata
 import org.springframework.stereotype.Service
+import java.lang.IllegalArgumentException
 import javax.inject.Inject
 
 @Service(DataGenerationService.NAME)
@@ -21,37 +23,20 @@ class DataGenerationServiceBean : DataGenerationService {
 
     override fun <T : Entity<*>> generateEntities(command: DataGenerationCommand<T>): EntitiesGenerationResult<T> {
         val generatedEntities = generate(command)
-        val result = EntitiesGenerationResult(generatedEntities)
-        if (command.type == DataGenerationType.JSON) {
-            return result
-        }
 
-        if (command.type == DataGenerationType.COMMIT_SEPARATELY) {
-            generatedEntities.forEach {
-                try {
-                    result.committed.add(dataManager.commit(it))
-                } catch (ex: Exception) {
-                    result.exceptions.add(ex)
-                }
+        val result = when (command.type) {
+            DataGenerationType.JSON -> {
+                val result = EntitiesGenerationResult(generatedEntities)
+                return result
             }
-            return result;
+            DataGenerationType.COMMIT_SEPARATELY -> commitSeparately(generatedEntities)
+            DataGenerationType.COMMIT_IN_SINGLE_TRANSACTION -> commitInTransaction(generatedEntities)
+            null -> throw IllegalArgumentException()
         }
 
-        if (command.type == DataGenerationType.COMMIT_IN_SINGLE_TRANSACTION) {
-            val ids = generatedEntities.map { it.id }.toSet()
-            try {
-                val allCommittedEntities = dataManager.commit(CommitContext(generatedEntities))
-                val committed: List<T> = allCommittedEntities
-                        .filter { it.id in ids }
-                        .map { it as T } // todo better type cast through entityClass
-                result.committed.addAll(committed)
-            } catch (e: Exception) {
-                result.exceptions.add(e)
-            }
-            return (result)
-        }
+        saveLog(result)
 
-        return EntitiesGenerationResult(listOf())
+        return result
     }
 
     override fun <T : Entity<*>> generateEntity(settings: EntityGenerationSettings<T>): T {
@@ -69,4 +54,44 @@ class DataGenerationServiceBean : DataGenerationService {
             generateEntity(entityGenerationSettings)
         }
     }
+
+    private fun <T : Entity<*>> commitSeparately(generatedEntities: List<T>): EntitiesGenerationResult<T> {
+        val result = EntitiesGenerationResult(generatedEntities)
+        generatedEntities.forEach {
+            try {
+                result.committed.add(dataManager.commit(it))
+            } catch (ex: Exception) {
+                result.exceptions.add(ex)
+            }
+        }
+        return result
+    }
+
+    private fun <T : Entity<*>> commitInTransaction(generatedEntities: List<T>): EntitiesGenerationResult<T> {
+        val result = EntitiesGenerationResult(generatedEntities)
+        val ids = generatedEntities.map { it.id }.toSet()
+        try {
+            val allCommittedEntities = dataManager.commit(CommitContext(generatedEntities))
+            val committed: List<T> = allCommittedEntities
+                    .filter { it.id in ids }
+                    .map { it as T } // todo better type cast through entityClass
+            result.committed.addAll(committed)
+        } catch (e: Exception) {
+            result.exceptions.add(e)
+        }
+        return (result)
+    }
+
+    private fun <T : Entity<*>> saveLog(result: EntitiesGenerationResult<T>) {
+        val logs: List<GeneratedEntity> = result.committed
+                .map {
+                    val generatedEntity = metadata.create(GeneratedEntity::class.java)
+                    generatedEntity.entityName = it.metaClass?.name
+                    generatedEntity.instanceId = it.id.toString()
+                    generatedEntity.instName = metadata.tools.getInstanceName(it)
+                    generatedEntity
+                }
+        dataManager.commit(CommitContext(logs))
+    }
+
 }

@@ -35,7 +35,7 @@ apply(plugin: 'cuba')
 cuba {
     artifact {
         group = 'com.haulmont.addon.datagen'
-        version = '0.2'
+        version = '0.3'
         isSnapshot = true
     }
     tomcat {
