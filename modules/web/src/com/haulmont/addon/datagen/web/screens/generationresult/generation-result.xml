@@ -7,19 +7,24 @@
     </data>
     <layout>
         <progressBar id="progressBar" indeterminate="true" width="100%"/>
-        <accordion id="accordion" visible="false">
-            <tab id="committedTab" expand="committedTable">
-                <table id="committedTable" dataContainer="committedEntitiesDc" width="100%">
-                    <columns>
-                        <column id="id" caption="msg://idColumn"/>
-                        <column id="instanceName" caption="msg://instanceNameColumn"/>
-                    </columns>
-                    <rows />
-                </table>
-            </tab>
-            <tab id="exceptionsTab">
-                <textArea id="exceptionsTextArea" width="100%" height="100%"/>
-            </tab>
-        </accordion>
+        <vbox id="resultsBox" expand="accordion" width="100%" visible="false">
+            <accordion id="accordion" >
+                <tab id="committedTab" expand="committedTable">
+                    <table id="committedTable" dataContainer="committedEntitiesDc" width="100%">
+                        <columns>
+                            <column id="id" caption="msg://idColumn"/>
+                            <column id="instanceName" caption="msg://instanceNameColumn"/>
+                        </columns>
+                        <rows />
+                    </table>
+                </tab>
+                <tab id="exceptionsTab">
+                    <textArea id="exceptionsTextArea" width="100%" height="100%"/>
+                </tab>
+            </accordion>
+            <hbox>
+                <linkButton id="browseBtn" caption="msg://openBrowseScreen"/>
+            </hbox>
+        </vbox>
     </layout>
 </window>

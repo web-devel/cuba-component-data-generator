@@ -3,6 +3,7 @@ package com.haulmont.addon.datagen.web.screens.generationresult
 import com.haulmont.addon.datagen.entity.DataGenerationCommand
 import com.haulmont.addon.datagen.service.DataGenerationService
 import com.haulmont.addon.datagen.service.EntitiesGenerationResult
+import com.haulmont.addon.datagen.web.screens.generatedentity.GeneratedEntityBrowse
 import com.haulmont.cuba.core.entity.BaseGenericIdEntity
 import com.haulmont.cuba.core.global.Messages
 import com.haulmont.cuba.core.global.MetadataTools
@@ -23,6 +24,8 @@ import javax.inject.Inject
 @UiDescriptor("generation-result.xml")
 @DialogMode(width = "800px", height = "600px", resizable = true)
 class GenerationResultScreen : Screen() {
+    @Inject
+    private lateinit var resultsBox: VBoxLayout
 
     var command: DataGenerationCommand<*>? = null
     @Inject
@@ -59,7 +62,7 @@ class GenerationResultScreen : Screen() {
 
     private fun doGenerate(cmd: DataGenerationCommand<*>) {
         progressBar.isVisible = true
-        accordion.isVisible = false
+        resultsBox.isVisible = false
         val task = object : BackgroundTask<Int?, EntitiesGenerationResult<*>>(600, this) {
             @Throws(Exception::class)
             override fun run(taskLifeCycle: TaskLifeCycle<Int?>): EntitiesGenerationResult<*> {
@@ -82,8 +85,8 @@ class GenerationResultScreen : Screen() {
 
     private fun showResult(res: EntitiesGenerationResult<*>) {
         progressBar.isVisible = false
-        accordion.isVisible = true
-        window.expand(accordion)
+        resultsBox.isVisible = true
+        window.expand(resultsBox)
 
         accordion.getTab("committedTab").caption =
                 messages.formatMessage(javaClass,"committedCaption", res.committed.size)
@@ -121,6 +124,13 @@ class GenerationResultScreen : Screen() {
         val label = uiComponents.create(Label.TYPE_STRING)
         label.value = metadataTools.getInstanceName(entity)
         return label
+    }
+
+    @Subscribe("browseBtn")
+    private fun onBrowseBtnClick(event: Button.ClickEvent) {
+        screenBuilders.screen(this)
+                .withScreenClass(GeneratedEntityBrowse::class.java)
+                .show()
     }
 
 

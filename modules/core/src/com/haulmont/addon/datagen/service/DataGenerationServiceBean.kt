@@ -11,6 +11,7 @@ import com.haulmont.cuba.core.global.DataManager
 import com.haulmont.cuba.core.global.Metadata
 import org.springframework.stereotype.Service
 import java.lang.IllegalArgumentException
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 @Service(DataGenerationService.NAME)
@@ -88,7 +89,11 @@ class DataGenerationServiceBean : DataGenerationService {
                     val generatedEntity = metadata.create(GeneratedEntity::class.java)
                     generatedEntity.entityName = it.metaClass?.name
                     generatedEntity.instanceId = it.id.toString()
-                    generatedEntity.instName = metadata.tools.getInstanceName(it)
+                    try {
+                        generatedEntity.instName = metadata.tools.getInstanceName(it)
+                    } catch (e: IllegalStateException) {
+                        // noop: unfetched attribute
+                    }
                     generatedEntity
                 }
         dataManager.commit(CommitContext(logs))

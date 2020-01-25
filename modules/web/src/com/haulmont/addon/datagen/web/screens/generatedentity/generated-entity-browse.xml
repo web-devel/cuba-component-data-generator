@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<window xmlns="http://schemas.haulmont.com/cuba/screen/window.xsd"
+        xmlns:c="http://schemas.haulmont.com/cuba/screen/jpql_condition.xsd"
+        caption="msg://browseCaption"
+        focusComponent="generatedEntitiesTable"
+        messagesPack="com.haulmont.addon.datagen.web.screens.generatedentity">
+    <data readOnly="true">
+        <collection id="generatedEntitiesDc"
+                    class="com.haulmont.addon.datagen.entity.GeneratedEntity"
+                    view="generatedEntity-browse">
+            <loader id="generatedEntitiesDl">
+                <query>
+                    <![CDATA[select e from datagen_GeneratedEntity e]]>
+                </query>
+            </loader>
+        </collection>
+    </data>
+    <dialogMode height="600"
+                width="800"/>
+    <layout expand="generatedEntitiesTable"
+            spacing="true">
+        <filter id="filter"
+                applyTo="generatedEntitiesTable"
+                dataLoader="generatedEntitiesDl">
+            <properties include=".*"/>
+        </filter>
+        <groupTable id="generatedEntitiesTable"
+                    width="100%"
+                    dataContainer="generatedEntitiesDc"
+                    multiselect="true">
+            <columns>
+                <column id="entityName"/>
+                <column id="instanceId"/>
+                <column id="instName"/>
+                <column id="createTs"/>
+                <column id="createdBy"/>
+            </columns>
+            <rowsCount/>
+            <buttonsPanel id="buttonsPanel"
+                          alwaysVisible="true">
+                <button id="removeSelectedBtn"
+                        caption="msg://removeSelectedBtn"
+                        stylename="danger"
+                        icon="REMOVE"/>
+            </buttonsPanel>
+        </groupTable>
+        <hbox id="lookupActions" spacing="true" visible="false">
+            <button action="lookupSelectAction"/>
+            <button action="lookupCancelAction"/>
+        </hbox>
+    </layout>
+</window>
