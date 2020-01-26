@@ -2,8 +2,17 @@
 
 # CUBA Component - Data Generator
 
-Application component which lets you generate sample data (persistent entities).
+Application component which lets you generate sample data (persistent entities) via user interface.
 May be useful for demo and test projects as well as for real projects when it's not possible to retrieve a dump.
+
+## Features
+
+* Different generation strategies:
+  * Random 
+  * Manual
+  * [Faker](https://github.com/serpro69/kotlin-faker) is used for conscious strings generation. See [data-providers](https://github.com/serpro69/kotlin-faker#data-providers).
+* Batch generation.
+* Browse and remove generated entities.
 
 ## Installation
 
@@ -27,23 +36,13 @@ May be useful for demo and test projects as well as for real projects when it's 
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
-| 7.2.x            | 0.2.x          |
-| 7.1.x            | 0.1.x - 0.2.x  |
+| 7.2.x            | 0.3.x          |
+| 7.1.x            | 0.3.x          |
 
 ## Usage
 
 In main menu open Administration -> Data Generation -> Generate Entities.
 
-### Dependencies
-
-[Faker](https://github.com/serpro69/kotlin-faker) is used to generate conscious strings.
-
-Add the Faker repository to the `build.gradle`:
-```groovy
-    maven {
-        url 'https://dl.bintray.com/serpro69/maven/'
-    }
-```
 
 ### Supported Attribute Types
 
