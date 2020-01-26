@@ -7,6 +7,7 @@ import com.haulmont.addon.datagen.web.screens.generatedentity.GeneratedEntityBro
 import com.haulmont.cuba.core.entity.BaseGenericIdEntity
 import com.haulmont.cuba.core.global.Messages
 import com.haulmont.cuba.core.global.MetadataTools
+import com.haulmont.cuba.gui.Notifications
 import com.haulmont.cuba.gui.ScreenBuilders
 import com.haulmont.cuba.gui.UiComponents
 import com.haulmont.cuba.gui.components.*
@@ -16,7 +17,9 @@ import com.haulmont.cuba.gui.executors.BackgroundWorker
 import com.haulmont.cuba.gui.executors.TaskLifeCycle
 import com.haulmont.cuba.gui.model.CollectionContainer
 import com.haulmont.cuba.gui.screen.*
+import com.haulmont.cuba.web.gui.components.WebSuggestionField
 import org.apache.commons.lang3.exception.ExceptionUtils
+import org.slf4j.LoggerFactory
 import javax.inject.Inject
 
 
@@ -52,6 +55,8 @@ class GenerationResultScreen : Screen() {
     private lateinit var exceptionsTextArea: TextArea<String>
     @Inject
     private lateinit var backgroundWorker: BackgroundWorker
+    @Inject
+    private lateinit var notifications: Notifications
 
 
     @Subscribe
@@ -76,7 +81,10 @@ class GenerationResultScreen : Screen() {
                 showResult(result);
             }
 
-            override fun progress(changes: List<Int?>) { // Show current progress in UI thread
+            override fun handleException(ex: java.lang.Exception?): Boolean {
+                LoggerFactory.getLogger(javaClass).error("Error in generation thread", ex);
+                handleBTError()
+                return true
             }
         }
         val taskHandler: BackgroundTaskHandler<*> = backgroundWorker.handle(task)
@@ -133,5 +141,12 @@ class GenerationResultScreen : Screen() {
                 .show()
     }
 
+    fun handleBTError() {
+        notifications.create()
+                .withType(Notifications.NotificationType.ERROR)
+                .withCaption(messages.getMessage(javaClass, "generationError"))
+                .show()
+        close(FrameOwner.WINDOW_CLOSE_ACTION)
+    }
 
 }

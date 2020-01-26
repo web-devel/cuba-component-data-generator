@@ -86,7 +86,8 @@ class DataGenerationServiceBean : DataGenerationService {
     private fun <T : Entity<*>> saveLog(result: EntitiesGenerationResult<T>) {
         val logs: List<GeneratedEntity> = result.committed
                 .map {
-                    val generatedEntity = metadata.create(GeneratedEntity::class.java)
+                    val metaClass = metadata.session.getClass(GeneratedEntity::class.java)
+                    val generatedEntity = metadata.create(metaClass) as GeneratedEntity // compat 7.2
                     generatedEntity.entityName = it.metaClass?.name
                     generatedEntity.instanceId = it.id.toString()
                     try {
