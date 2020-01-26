@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fragment xmlns="http://schemas.haulmont.com/cuba/screen/fragment.xsd">
+    <data>
+        <instance id="dc"
+                  class="com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings"
+                  view="_local">
+            <loader/>
+        </instance>
+    </data>
+    <layout>
+        <hbox spacing="true">
+            <pickerField id="refPicker"/>
+        </hbox>
+    </layout>
+</fragment>
+

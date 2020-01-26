@@ -54,3 +54,5 @@ In main menu open Administration -> Data Generation -> Generate Entities.
   * Double
   * BigDecimal
 * Enum
+* References
+  * toOne

@@ -5,6 +5,7 @@ import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
+import com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings
 
 object PropertyGeneration {
 
@@ -14,6 +15,7 @@ object PropertyGeneration {
                 is StringPropGenSettings -> StringGenerator.generateStringProperty(settings)
                 is NumberPropGenSettings -> NumberGenerator.generateNumberProperty(settings)
                 is EnumPropGenSettings -> EnumGenerator.generateEnumProperty(settings)
+                is ReferencePropGenSettings -> ReferenceGenerator.generateRefProperty(settings)
                 else -> throw IllegalArgumentException("Property generator is not found")
             }
 

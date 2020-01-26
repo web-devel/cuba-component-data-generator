@@ -6,6 +6,7 @@ import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
+import com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings
 import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import com.haulmont.addon.datagen.generation.GenerationSettingsFactory
 import com.haulmont.addon.datagen.service.DataGenerationService
@@ -14,6 +15,7 @@ import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.enumpropgensettings.EnumPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.numberpropgensettings.NumberPropGenSettingsFragment
+import com.haulmont.addon.datagen.web.screens.props.referencepropgensettings.ReferencePropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
 import com.haulmont.chile.core.model.MetaClass
 import com.haulmont.chile.core.model.MetaProperty
@@ -174,6 +176,9 @@ class DataGenerationScreen : Screen() {
                         .setItem(propSettings)
             is EnumPropGenSettings ->
                 fragments.create(this, EnumPropGenSettingsFragment::class.java)
+                        .setItem(propSettings)
+            is ReferencePropGenSettings ->
+                fragments.create(this, ReferencePropGenSettingsFragment::class.java)
                         .setItem(propSettings)
             else -> throw IllegalStateException("Unsupported Property")
         }

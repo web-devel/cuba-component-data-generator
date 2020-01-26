@@ -10,6 +10,7 @@
         <class>com.haulmont.addon.datagen.entity.number.NumberPropGenSettings</class>
         <class>com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings</class>
         <class>com.haulmont.addon.datagen.entity.DataGenerationCommand</class>
+        <class>com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings</class>
     </metadata-model>
 
 </metadata>
