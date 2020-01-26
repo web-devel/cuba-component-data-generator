@@ -5,6 +5,8 @@
 Application component which lets you generate sample data (persistent entities) via user interface.
 May be useful for demo and test projects as well as for real projects when it's not possible to retrieve a dump.
 
+![showcase](https://raw.githubusercontent.com/web-devel/cuba-component-data-generator/master/etc/showcase.gif)
+
 ## Features
 
 * Different generation strategies:
