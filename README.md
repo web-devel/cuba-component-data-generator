@@ -18,22 +18,12 @@ May be useful for demo and test projects as well as for real projects when it's 
 
 ## Installation
 
-1. Add maven repos to build.gradle:
-    ```groovy
-        maven {
-            url 'https://dl.bintray.com/web-devel/maven/'
-        }
-        maven {
-            url 'https://dl.bintray.com/serpro69/maven/'
-        }
-    ```
-2. Refresh gradle project
-3. Use CUBA Studio interface to [add](https://doc.cuba-platform.com/studio/#add_ons) the component:
-  - Switch to CUBA in the Project tree.
-  - Double-click on Add-ons node.
-  - Click Install Add-on manually icon.
-  - Enter add-on coordinates `com.haulmont.addon.datagen:datagen-global:{latest version}`. See [published versions](https://bintray.com/web-devel/maven/cuba-component-data-generator).
-
+The add-on is available on [marketplace](https://www.cuba-platform.com/marketplace).
+Best install [using](https://doc.cuba-platform.com/studio/#add_ons) CUBA Studio interface:
+  - In main menu: CUBA -> Marketplace
+  - Search by `Data Generator`
+  - Click `Install`
+  
 ### Compatibility
 
 | Platform Version | Add-on Version |
