@@ -3,8 +3,10 @@ package com.haulmont.addon.datagen.service
 import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
 import io.github.serpro69.kfaker.Faker
 import io.github.serpro69.kfaker.provider.AbstractFakeDataProvider
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.util.*
+import javax.annotation.PostConstruct
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.declaredMemberFunctions
 import kotlin.reflect.full.declaredMemberProperties
@@ -13,11 +15,23 @@ import kotlin.reflect.jvm.javaField
 @Service(FakerService.NAME)
 class FakerServiceBean : FakerService {
 
-    private val faker = Faker()
+    private var faker: Faker? = null
     private val providerProps: SortedMap<String, KProperty1<Faker, *>> = scanProviders()
     private var providerFunctionRefs: List<String>? = null
 
+    @PostConstruct
+    fun init() {
+        try {
+            faker = Faker()
+        } catch (ex: Exception) {
+            LoggerFactory.getLogger(this.javaClass).warn("Failed to initialize Faker", ex)
+        }
+    }
+
     override fun getProviderFunctionRefs(): List<String> {
+        if (faker == null) {
+            return emptyList()
+        }
         val cachedRefs = providerFunctionRefs
         if (cachedRefs != null) {
             return cachedRefs
@@ -50,7 +64,7 @@ class FakerServiceBean : FakerService {
     private fun getProviderFunctionsNameList(providerName: String): List<String> {
         val prop = providerProps[providerName]
         requireNotNull(prop)
-        val provider = prop.get(faker)
+        val provider = prop.get(faker!!)
         requireNotNull(provider)
         return provider::class.declaredMemberFunctions
                 .filter { it.parameters.size == 1 } // 1st parameter is instance
