@@ -28,7 +28,7 @@ Best install [using](https://doc.cuba-platform.com/studio/#add_ons) CUBA Studio 
 
 | Platform Version | Add-on Version |
 | ---------------- | -------------- |
-| 7.2.x            | 0.3.x          |
+| 7.2.x            | 0.4.x          |
 | 7.1.x            | 0.3.x          |
 
 ## Usage
