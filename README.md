@@ -45,6 +45,7 @@ In main menu open Administration -> Data Generation -> Generate Entities.
   * Long
   * Double
   * BigDecimal
+  * LocalDate: values are number of days from today.  (Positive is future, negative is past)
 * Enum
 * References
   * toOne

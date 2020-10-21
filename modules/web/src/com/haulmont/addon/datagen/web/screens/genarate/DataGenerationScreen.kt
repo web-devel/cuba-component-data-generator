@@ -5,6 +5,7 @@ import com.haulmont.addon.datagen.entity.EntityGenerationSettings
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
+import com.haulmont.addon.datagen.entity.localdate.LocalDatePropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings
 import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
@@ -14,6 +15,7 @@ import com.haulmont.addon.datagen.web.screens.generationresult.GenerationResultS
 import com.haulmont.addon.datagen.web.screens.props.PropGenFragment
 import com.haulmont.addon.datagen.web.screens.props.booleanpropertygenerationsettings.BooleanPropertyGenerationSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.enumpropgensettings.EnumPropGenSettingsFragment
+import com.haulmont.addon.datagen.web.screens.props.localdategensettings.LocalDatePropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.numberpropgensettings.NumberPropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.referencepropgensettings.ReferencePropGenSettingsFragment
 import com.haulmont.addon.datagen.web.screens.props.stringpropertygenerationsettings.StringPropertyGenerationSettingsFragment
@@ -173,6 +175,9 @@ class DataGenerationScreen : Screen() {
                         .setItem(propSettings)
             is NumberPropGenSettings ->
                 fragments.create(this, NumberPropGenSettingsFragment::class.java)
+                        .setItem(propSettings)
+            is LocalDatePropGenSettings ->
+                fragments.create(this, LocalDatePropGenSettingsFragment::class.java)
                         .setItem(propSettings)
             is EnumPropGenSettings ->
                 fragments.create(this, EnumPropGenSettingsFragment::class.java)

@@ -3,6 +3,7 @@ package com.haulmont.addon.datagen.generation
 import com.haulmont.addon.datagen.entity.PropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings
 import com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings
+import com.haulmont.addon.datagen.entity.localdate.LocalDatePropGenSettings
 import com.haulmont.addon.datagen.entity.number.NumberPropGenSettings
 import com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings
 import com.haulmont.addon.datagen.entity.str.StringPropGenSettings
@@ -16,7 +17,8 @@ object GenerationSettingsFactory {
             java.lang.Integer::class.java to NumberPropGenSettings::class.java,
             java.lang.Long::class.java to NumberPropGenSettings::class.java,
             java.lang.Double::class.java to NumberPropGenSettings::class.java,
-            java.math.BigDecimal::class.java to NumberPropGenSettings::class.java
+            java.math.BigDecimal::class.java to NumberPropGenSettings::class.java,
+            java.time.LocalDate::class.java to LocalDatePropGenSettings::class.java
     )
 
     fun createSettings(prop: MetaProperty): PropertyGenerationSettings? {
