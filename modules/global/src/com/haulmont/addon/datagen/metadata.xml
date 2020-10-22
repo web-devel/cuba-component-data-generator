@@ -8,6 +8,7 @@
         <class>com.haulmont.addon.datagen.entity.str.StringPropGenSettings</class>
         <class>com.haulmont.addon.datagen.entity.bool.BooleanPropertyGenerationSettings</class>
         <class>com.haulmont.addon.datagen.entity.number.NumberPropGenSettings</class>
+        <class>com.haulmont.addon.datagen.entity.localdate.LocalDatePropGenSettings</class>
         <class>com.haulmont.addon.datagen.entity.enm.EnumPropGenSettings</class>
         <class>com.haulmont.addon.datagen.entity.DataGenerationCommand</class>
         <class>com.haulmont.addon.datagen.entity.ref.ReferencePropGenSettings</class>

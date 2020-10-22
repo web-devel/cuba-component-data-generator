@@ -9,6 +9,7 @@ import com.haulmont.cuba.security.entity.User;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -56,6 +57,9 @@ public class TestEntityJava extends StandardEntity {
 
     @Column(name = "INT_ENUM")
     protected String intEnum;
+
+    @Column(name = "LOCAL_DATE")
+    protected LocalDate localdate;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ASSOC_ONE_TO_ONE_ID")
@@ -191,5 +195,13 @@ public class TestEntityJava extends StandardEntity {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public LocalDate getLocaldate() {
+        return localdate;
+    }
+
+    public void setLocaldate(LocalDate localdate) {
+        this.localdate = localdate;
     }
 }
